@@ -13,7 +13,7 @@ async function init() {
   console.log("server.js started")
   const server = Hapi.server({
     port: process.env.PORT || 3000,
-    host: "localhost",
+    // host: "localhost",
   });
   await server.register(Vision);
   server.views({
