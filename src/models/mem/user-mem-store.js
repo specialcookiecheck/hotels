@@ -22,7 +22,10 @@ export const userMemStore = {
 
   async getUserByEmail(email) {
     console.log("getUserByEmail started")
-    return users.find((user) => user.email === email);
+    const returnedUser = users.find((user) => user.email === email);
+    console.log(returnedUser);
+    //console.log(`returnedUser: ${returnedUser}`); // adding this will generated an error (because of '[Object: null prototype]?)'
+    return returnedUser;
   },
 
   async deleteUserById(id) {
