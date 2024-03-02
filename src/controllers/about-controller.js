@@ -5,6 +5,7 @@ export const aboutController = {
         const viewData = {
           title: "About Hotels!",
         };
+        console.log("aboutController index handler completed, returning")
         return h.view("about-view", viewData);
       },
     },

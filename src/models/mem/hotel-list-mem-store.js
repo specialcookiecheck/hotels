@@ -18,12 +18,16 @@ export const hotelListMemStore = {
 
   async getHotelListById(id) {
     console.log("getHotelListById started")
-    const list = hotelLists.find((hotelList) => hotelList._id === id);
+    let list = hotelLists.find((hotelList) => hotelList._id === id);
     console.log("list:");
     console.log(list);
-    list.hotels = await hotelMemStore.getHotelsByHotelListId(list._id);
-    console.log(`hotels: ${list.hotels}`);
-    console.log(list.hotels);
+    if (list) {
+      list.hotels = await hotelMemStore.getHotelsByHotelListId(list._id);
+      console.log(`hotels: ${list.hotels}`);
+      console.log(list.hotels);
+    } else {
+      list = null;
+    }
     console.log("getHotelListById completed")
     return list;
   },
@@ -43,7 +47,7 @@ export const hotelListMemStore = {
   async deleteHotelListById(id) {
     console.log("deleteHotelListById started")
     const index = hotelLists.findIndex((hotelList) => hotelList._id === id);
-    hotelLists.splice(index, 1);
+    if (index !== -1) hotelLists.splice(index, 1);
   },
 
   async deleteAllHotelLists() {

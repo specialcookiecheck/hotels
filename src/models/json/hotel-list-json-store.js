@@ -18,8 +18,12 @@ export const hotelListJsonStore = {
 
   async getHotelListById(id) {
     await db.read();
-    const list = db.data.hotelLists.find((hotelList) => hotelList._id === id);
-    list.hotels = await hotelJsonStore.getHotelsByHotelListId(list._id);
+    let list = db.data.hotelLists.find((hotelList) => hotelList._id === id);
+    if (list) {
+      list.hotels = await hotelJsonStore.getHotelsByHotelListId(list._id);
+    } else {
+      list = null;
+    }
     return list;
   },
 
@@ -31,7 +35,7 @@ export const hotelListJsonStore = {
   async deleteHotelListById(id) {
     await db.read();
     const index = db.data.hotelLists.findIndex((hotelList) => hotelList._id === id);
-    db.data.hotelLists.splice(index, 1);
+    if (index !== -1) db.data.hotelLists.splice(index, 1);
     await db.write();
   },
 

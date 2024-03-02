@@ -23,17 +23,17 @@ export const hotelListController = {
       payload: HotelSpec,
       options: { abortEarly: false },
       failAction: async function (request, h, error) {
-        console.log("addHotel failAction started");
+        console.log("hotelListController addHotel failAction started");
         console.log(request.params);
         const hotelList = await db.hotelListStore.getHotelListById(request.params.id);
         console.log(`hotelList: ${hotelList}`);
-        // console.log(hotelList); // for testing
+        console.log(hotelList); // for testing
         const viewData = {
             title: "Add hotel error",
             hotelList: hotelList,
             errors: error.details,
         };
-        console.log("addHotel failAction completed, returning");
+        console.log("hotelListController addHotel failAction completed, returning");
         return h.view( "hotel-list-view", viewData ).takeover().code(400);
       },
     },
@@ -51,6 +51,7 @@ export const hotelListController = {
         console.log(newHotel);
         await db.hotelStore.addHotel(hotelList._id, newHotel);
         // hotelListController.index();
+        console.log("hotelListController addHotel handler completed, returning");
         return h.redirect(`/hotellist/${hotelList._id}`);
     },
   },
@@ -58,8 +59,11 @@ export const hotelListController = {
   deleteHotel: {
     handler: async function(request, h) {
       console.log("hotelListController deleteHotel handler started");
+      console.log(`request.params.id: ${request.params.id}`);
       const hotelList = await db.hotelListStore.getHotelListById(request.params.id);
-      await db.hotelStore.deleteHotel(request.params.hotelid);
+      console.log(`request.params.hotelid: ${request.params.hotelid}`);
+      await db.hotelStore.deleteHotelById(request.params.hotelid);
+      console.log("hotelListController deleteHotel handler completed, returning");
       return h.redirect(`/hotellist/${hotelList._id}`);
     },
   },

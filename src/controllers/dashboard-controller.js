@@ -5,7 +5,7 @@ export const dashboardController = {
 
   index: {
     handler: async function (request, h) {
-      console.log("dashboard index handler started");
+      console.log("dashboardController index handler started");
       const loggedInUser = request.auth.credentials;
       // const hotelLists = await db.hotelListStore.getUserHotelLists(loggedInUser._id);
       const hotelLists = await db.hotelListStore.getUserHotelLists(loggedInUser._id); // auth login
@@ -16,6 +16,7 @@ export const dashboardController = {
         user: loggedInUser,
         hotelLists: hotelLists,
       };
+      console.log("dashboardController index handler completed, returning")
       return h.view("dashboard-view", viewData);
     },
   },
@@ -25,7 +26,7 @@ export const dashboardController = {
       payload: HotelListSpec,
       options: { abortEarly: false },
       failAction: async function (request, h, error) {
-        console.log("addHotelList failAction started");
+        console.log("dashboardController addHotelList failAction started");
         const loggedInUser = request.auth.credentials;
         const hotelLists = await db.hotelListStore.getUserHotelLists(loggedInUser._id);
         console.log(`hotelLists: ${hotelLists}`);
@@ -34,28 +35,30 @@ export const dashboardController = {
             hotelLists: hotelLists,
             errors: error.details,
         };
-        console.log("addHotelList failAction completed, returning");
+        console.log("dashboardController addHotelList failAction completed, returning");
         return h.view("dashboard-view", viewData).takeover().code(400);
       },
     },
     handler: async function (request, h) {
-      console.log("dashboard addHotelList handler started");
+      console.log("dashboardController addHotelList handler started");
       const loggedInUser = request.auth.credentials;
       const newHotelList = {
         userid: loggedInUser._id,
         title: request.payload.title,
       };
-      console.log("newHotelList payload loaded");
+      // console.log("dashboardController newHotelList payload loaded");
       await db.hotelListStore.addHotelList(newHotelList);
+      console.log("dashboardController addHotelList handler completed, returning");
       return h.redirect("/dashboard");
     },
   },
 
   deleteHotelList: {
     handler: async function (request, h) {
-      console.log("dashboard deleteHotelList handler started");
+      console.log("dashboardController deleteHotelList handler started");
       const hotelList = await db.hotelListStore.getHotelListById(request.params.id);
       await db.hotelListStore.deleteHotelListById(hotelList._id);
+      console.log("dashboardController deleteHotelList handler completed, returning");
       return h.redirect("/dashboard");
     },
   },

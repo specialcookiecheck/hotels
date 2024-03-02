@@ -23,13 +23,15 @@ export const hotelJsonStore = {
 
   async getHotelById(id) {
     await db.read();
-    return db.data.hotels.find((hotel) => hotel._id === id);
+    let returnableHotel = db.data.hotels.find((hotel) => hotel._id === id);
+    if (returnableHotel === undefined) returnableHotel = null;
+    return returnableHotel;
   },
 
-  async deleteHotel(id) {
+  async deleteHotelById(id) {
     await db.read();
     const index = db.data.hotels.findIndex((hotel) => hotel._id === id);
-    db.data.hotels.splice(index, 1);
+    if (index !== -1) db.data.hotels.splice(index, 1);
     await db.write();
   },
 

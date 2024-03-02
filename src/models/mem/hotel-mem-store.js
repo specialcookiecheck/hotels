@@ -4,7 +4,8 @@ let hotels = [];
 
 export const hotelMemStore = {
   async getAllHotels() {
-    console.log("getAllHotels started")
+    console.log("getAllHotels started");
+    console.log("getAllHotels completed");
     return hotels;
   },
 
@@ -23,7 +24,7 @@ export const hotelMemStore = {
   },
 
   async getHotelsByHotelListId(id) {
-    console.log(`getHotelsByHotelListId started: ${id}`)
+    console.log(`getHotelsByHotelListId started: ${id}`);
     console.log(`hotels: ${hotels}`);
     console.log(hotels); // for testing
     const filteredHotels = hotels.filter((hotel) => hotel.hotelListId === id);
@@ -34,30 +35,37 @@ export const hotelMemStore = {
   },
 
   async getHotelById(id) {
-    console.log("getHotelById started")
-    return hotels.find((hotel) => hotel._id === id);
+    console.log("getHotelById started");
+    let returnableHotel = hotels.find((hotel) => hotel._id === id);
+    if (returnableHotel === undefined) returnableHotel = null;
+    console.log("getHotelById completed");
+    return returnableHotel;
   },
 
   async getHotelListHotels(hotellistId) {
-    console.log("getHotelListHotels started")
+    console.log("getHotelListHotels started");
+    console.log("getHotelListHotels completed");
     return hotels.filter((hotel) => hotel.hotellistid === hotellistId);
   },
 
-  async deleteHotel(id) {
-    console.log("deleteHotel started")
+  async deleteHotelById(id) {
+    console.log("deleteHotel started");
     const index = hotels.findIndex((hotel) => hotel._id === id);
-    hotels.splice(index, 1);
+    if (index !== -1) hotels.splice(index, 1);
+    console.log("deleteHotel completed");
   },
 
   async deleteAllHotels() {
     console.log("deleteAllHotels started")
     hotels = [];
+    console.log("deleteAllHotels completed")
   },
 
   async updateHotel(hotel, updatedHotel) {
-    console.log("updateHotel started")
+    console.log("updateHotel started");
     hotel.name = updatedHotel.name;
     hotel.city = updatedHotel.city;
     hotel.airport = updatedHotel.airport;
+    console.log("updateHotel completed");
   },
 };
