@@ -19,4 +19,7 @@ export const webRoutes = [
 
   { method: "GET", path: "/hotellist/{id}", config: hotelListController.index },
   { method: "POST", path: "/hotellist/{id}/addhotel", config: hotelListController.addHotel },
+
+  { method: "GET", path: "/dashboard/deletehotellist/{id}", config: dashboardController.deleteHotelList },
+  { method: "GET", path: "/hotellist/{id}/deletehotel/{hotelid}", config: hotelListController.deleteHotel },
 ];

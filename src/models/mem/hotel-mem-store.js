@@ -17,7 +17,7 @@ export const hotelMemStore = {
     console.log(`hotel.hotelListId: ${hotelListId}`)
     hotels.push(hotel);
     console.log(`hotels: ${hotels}`);
-    console.log(hotels);
+    // console.log(hotels); // for testing
     console.log("addHotel completed");
     return hotel;
   },
@@ -25,10 +25,11 @@ export const hotelMemStore = {
   async getHotelsByHotelListId(id) {
     console.log(`getHotelsByHotelListId started: ${id}`)
     console.log(`hotels: ${hotels}`);
-    console.log(hotels);
+    console.log(hotels); // for testing
     const filteredHotels = hotels.filter((hotel) => hotel.hotelListId === id);
     console.log(`filteredHotels: ${filteredHotels}`);
     console.log(filteredHotels);
+    console.log("getHotelsByHotelListId completed");
     return filteredHotels;
   },
 
