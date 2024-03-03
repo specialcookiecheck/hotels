@@ -5,81 +5,52 @@
       "lastName": "Simpson",
       "email": "homer@simpson.com",
       "password": "secret",
-      "_id": "f18ba112-e93d-4066-8475-05ff64c0c915"
+      "_id": "a862c791-e2d9-458c-bb5b-7a6268e8614a"
     },
     {
       "firstName": "Marge",
       "lastName": "Simpson",
       "email": "marge@simpson.com",
       "password": "secret",
-      "_id": "af84f2bb-d5a6-43e8-9f73-89aa8d1bc0c5"
+      "_id": "216d7bfa-d815-431c-b92f-43a86a2c0118"
     },
     {
       "firstName": "Bart",
       "lastName": "Simpson",
       "email": "bart@simpson.com",
       "password": "secret",
-      "_id": "da368668-7787-49c9-8a5c-3ec430af4982"
-    },
-    {
-      "firstName": "q",
-      "lastName": "q",
-      "email": "q",
-      "password": "q",
-      "_id": "dd866c62-b165-4743-8b2b-14e865754051"
+      "_id": "9b8062f8-8242-464b-a784-a1d6b7cba374"
     }
   ],
   "hotelLists": [
     {
       "title": "My fav places",
-      "_id": "589575dd-b049-428c-89d4-f60976076910"
+      "_id": "2b90f0cf-3437-4b81-ba30-b03c5a5169ea"
     },
     {
       "title": "Good value",
-      "_id": "b959d863-06c5-4166-a07a-3c186594e75d"
+      "_id": "56511f27-2fb6-409a-a153-cc80be324ecb"
     },
     {
       "title": "Cheap and cheerful!",
-      "_id": "5dc303ab-909f-4eec-9543-8a0aa69bb659"
-    },
-    {
-      "userid": "dd866c62-b165-4743-8b2b-14e865754051",
-      "title": "asd",
-      "_id": "b23da7e8-0d3c-44cd-8b18-8068952529c9"
+      "_id": "9b5b5363-cf3e-4d02-9fb2-ef8aaac76295"
     }
   ],
   "hotels": [
     {
       "name": "Waldorf Astoria",
-      "id": "blablaid123",
-      "_id": "2f1ea44d-a64c-4e5a-bc2d-956be7dfae92",
+      "_id": "76fa8c51-dd74-4e2b-8641-6c6dcd1a3fe9",
       "hotelListid": "newlistIdblable"
     },
     {
-      "name": "Waldorf Astoria",
-      "id": "blablaid123",
-      "_id": "1e3f2d7b-6daf-4d1a-a3e9-dfad120753c7",
+      "name": "Ritz Carlton",
+      "_id": "fa9ae3f6-adef-467c-abf5-4be31c8f2775",
       "hotelListid": "newlistIdblable"
     },
     {
-      "name": "Waldorf Astoria",
-      "id": "blablaid123",
-      "_id": "c8b459a1-45a6-4779-89a3-67ef39e396ad",
+      "name": "B&B down the road",
+      "_id": "57ffcc2b-be2f-46dd-9064-5ddf5b96cfa7",
       "hotelListid": "newlistIdblable"
-    },
-    {
-      "name": "g",
-      "city": "g",
-      "airport": "g",
-      "_id": "009bfc4a-2cbd-46aa-a6ff-1d3806c8fbc7",
-      "hotelListid": "b23da7e8-0d3c-44cd-8b18-8068952529c9"
-    },
-    {
-      "name": "b",
-      "city": "b",
-      "airport": "b",
-      "_id": "0e7ed97a-04b5-4289-afb5-136ab543db92",
-      "hotelListid": "b23da7e8-0d3c-44cd-8b18-8068952529c9"
     }
   ]
 }

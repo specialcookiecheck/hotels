@@ -50,8 +50,13 @@ export const hotelMemStore = {
 
   async deleteHotelById(id) {
     console.log("deleteHotel started");
+    console.log(`hotels: ${hotels}`);
+    console.log(hotels);
     const index = hotels.findIndex((hotel) => hotel._id === id);
+    console.log(`index to be deleted: ${index}`);
     if (index !== -1) hotels.splice(index, 1);
+    console.log(`hotels: ${hotels}`);
+    console.log(hotels);
     console.log("deleteHotel completed");
   },
 

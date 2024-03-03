@@ -1,11 +1,13 @@
 import { assert } from "chai";
+import { EventEmitter } from "events";
 import { db } from "../src/models/db.js";
+import { assertSubset } from "./test-utils.js";
 import { testHotelLists, testHotel } from "./fixtures.js";
 
 suite("HotelLists Model tests", () => {
 
   setup(async () => {
-    db.init("json");
+    db.init("mongo");
     await db.hotelListStore.deleteAllHotelLists();
     for (let i = 0; i < testHotelLists.length; i += 1) {
       // eslint-disable-next-line no-await-in-loop
@@ -15,7 +17,7 @@ suite("HotelLists Model tests", () => {
 
   test("create a hotelList", async () => {
     const hotelList = await db.hotelListStore.addHotelList(testHotel);
-    assert.equal(testHotel, hotelList);
+    assertSubset(testHotel, hotelList);
     assert.isDefined(hotelList._id);
   });
 
@@ -30,7 +32,7 @@ suite("HotelLists Model tests", () => {
   test("get a hotelList - success", async () => {
     const hotelList = await db.hotelListStore.addHotelList(testHotel);
     const returnedHotelList = await db.hotelListStore.getHotelListById(hotelList._id);
-    assert.equal(testHotel, hotelList);
+    assertSubset(testHotel, hotelList);
   });
 
   test("delete One HotelList - success", async () => {
@@ -53,3 +55,5 @@ suite("HotelLists Model tests", () => {
     assert.equal(testHotelLists.length, allHotelLists.length);
   });
 });
+
+EventEmitter.setMaxListeners(25);

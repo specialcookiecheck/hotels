@@ -1,21 +1,22 @@
 import { assert } from "chai";
 import { db } from "../src/models/db.js";
+import { assertSubset } from "./test-utils.js";
 import { testHotels, testHotel } from "./fixtures.js";
 
 suite("Hotels Model tests", () => {
 
   setup(async () => {
-    db.init("json");
+    db.init("mongo");
     await db.hotelStore.deleteAllHotels();
     for (let i = 0; i < testHotels.length; i += 1) {
       // eslint-disable-next-line no-await-in-loop
-      testHotels[i] = await db.hotelStore.addHotel("newlistIdblable", testHotels[0]);
+      testHotels[i] = await db.hotelStore.addHotel("newlistIdblable", testHotels[i]);
     }
   });
 
   test("create a hotel", async () => {
     const hotel = await db.hotelStore.addHotel("newlistIdblable", testHotel );
-    assert.equal(testHotel.name, hotel.name);
+    assertSubset(testHotel.name, hotel.name);
     assert.isDefined(hotel._id);
   });
 
@@ -30,11 +31,12 @@ suite("Hotels Model tests", () => {
   test("get a hotel - success", async () => {
     const hotel = await db.hotelStore.addHotel("newlistIdblable", testHotel );
     const returnedHotel = await db.hotelStore.getHotelById(hotel._id);
-    assert.equal(testHotel, hotel);
+    assertSubset(testHotel, hotel);
   });
 
   test("delete One Hotel - success", async () => {
     const id = testHotels[0]._id;
+    console.log(`id: ${id}`);
     await db.hotelStore.deleteHotelById(id);
     const returnedHotels = await db.hotelStore.getAllHotels();
     assert.equal(returnedHotels.length, testHotels.length - 1);

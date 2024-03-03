@@ -5,15 +5,15 @@ export const hotelListController = {
   index: {
     handler: async function (request, h) {
         console.log("hotelListController index handler started")
-        console.log(`request.params: ${request.params}`);
-        console.log(request.params);
         const hotelList = await db.hotelListStore.getHotelListById(request.params.id);
         console.log(`hotelList: ${hotelList}`);
         // console.log(hotelList); // for testing
         const viewData = {
             title: "HotelList",
             hotelList: hotelList,
+            listId: request.params.id,
       };
+      // console.log(`viewData listId: ${viewData.listId}`); // for testing
       return h.view("hotel-list-view", viewData);
     },
   },
@@ -32,7 +32,9 @@ export const hotelListController = {
             title: "Add hotel error",
             hotelList: hotelList,
             errors: error.details,
+            listId: request.params.id,
         };
+        console.log(`viewData listId: ${viewData.listId}`);
         console.log("hotelListController addHotel failAction completed, returning");
         return h.view( "hotel-list-view", viewData ).takeover().code(400);
       },
@@ -49,10 +51,10 @@ export const hotelListController = {
         };
         console.log(`newHotel: ${newHotel}`);
         console.log(newHotel);
-        await db.hotelStore.addHotel(hotelList._id, newHotel);
+        await db.hotelStore.addHotel(request.params.id, newHotel);
         // hotelListController.index();
         console.log("hotelListController addHotel handler completed, returning");
-        return h.redirect(`/hotellist/${hotelList._id}`);
+        return h.redirect(`/hotellist/${request.params.id}`);
     },
   },
 
@@ -64,7 +66,7 @@ export const hotelListController = {
       console.log(`request.params.hotelid: ${request.params.hotelid}`);
       await db.hotelStore.deleteHotelById(request.params.hotelid);
       console.log("hotelListController deleteHotel handler completed, returning");
-      return h.redirect(`/hotellist/${hotelList._id}`);
+      return h.redirect(`/hotellist/${request.params.id}`);
     },
   },
 };
