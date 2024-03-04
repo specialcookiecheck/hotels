@@ -6,9 +6,9 @@ const hotelSchema = new Schema({
   name: String,
   city: String,
   airport: String,
-  hotellistid: {
+  HotelList: {
     type: Schema.Types.ObjectId,
-    ref: "hotelList",
+    ref: "HotelList",
   },
 });
 
