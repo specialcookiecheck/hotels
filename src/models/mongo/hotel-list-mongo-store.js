@@ -16,7 +16,7 @@ export const hotelListMongoStore = {
       console.log(`hotelList: ${hotelList}`);
       console.log(hotelList);
       if (hotelList) {
-        hotelList.hotels = await hotelMongoStore.getHotelsByHotelListId(hotelList._id);
+        hotelList.hotels = await hotelMongoStore.getHotelsByHotelListId(hotelList._id.valueOf());
       }
       console.log("hotelListMongoStore getHotelListById completed, returning hotelList");
       return hotelList;
