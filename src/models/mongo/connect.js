@@ -4,7 +4,7 @@ import Mongoose from "mongoose";
 export function connectMongo() {
   dotenv.config();
 
-  Mongoose.connection.dropDatabase(); // for testing, drops database
+  // Mongoose.connection.dropDatabase(); // for testing, drops database!!
   Mongoose.set("strictQuery", true);
   Mongoose.connect(process.env.db);
   const db = Mongoose.connection;

@@ -1,3 +1,5 @@
+export const serviceUrl = "http://localhost:3000";
+
 export const vinc = {
     firstName: "vinc",
     lastName: "da Vinci",
@@ -28,6 +30,8 @@ export const testUsers = [
 
 export const testHotel = {
   name: "Disneyland Paris",
+  city: "Paris",
+  airport: "CDG",
 };
 
 export const testHotelLists = [
@@ -45,11 +49,17 @@ export const testHotelLists = [
 export const testHotels = [
   {
       name: "Waldorf Astoria",
+      city: "New York",
+      airport: "JFK",
   },
   {
       name: "Ritz Carlton",
+      city: "New York",
+      airport: "JFK",
   },
   {
       name: "B&B down the road",
+      city: "Dundalk",
+      airport: "DUB",
   }
 ];
