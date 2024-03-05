@@ -3,16 +3,17 @@ import { hotelService } from "../hotel-service.js";
 import { assertSubset } from "../test-utils.js";
 import { vinc, testUsers } from "../fixtures.js";
 
+const users = new Array(testUsers.length);
+
 suite("User API tests", () => {
     setup(async () => {
         await hotelService.deleteAllUsers();
         for (let i = 0; i < testUsers.length; i += 1) {
           // eslint-disable-next-line no-await-in-loop
-          testUsers[i] = await hotelService.createUser(testUsers[i]);
+          users[i] = await hotelService.createUser(testUsers[i]);
         }
       });
-  teardown(async () => {
-  });
+  teardown(async () => {});
 
   test("create a user", async () => {
     const newUser = await hotelService.createUser(vinc);
@@ -29,8 +30,8 @@ suite("User API tests", () => {
   });
 
   test("get a user - success", async () => {
-    const returnedUser = await hotelService.getUser(testUsers[0]._id);
-    assert.deepEqual(testUsers[0], returnedUser);
+    const returnedUser = await hotelService.getUser(users[0]._id);
+    assert.deepEqual(users[0], returnedUser);
   });
 
   test("get a user - fail", async () => {

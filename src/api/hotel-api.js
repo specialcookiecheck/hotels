@@ -1,5 +1,7 @@
 import Boom from "@hapi/boom";
 import { db } from "../models/db.js";
+import { IdSpec, HotelSpec, HotelSpecPlus, HotelArraySpec } from "../models/joi-schemas.js";
+import { validationError } from "./logger.js";
 
 export const hotelApi = {
   find: {
@@ -13,6 +15,10 @@ export const hotelApi = {
         return Boom.serverUnavailable("Database Error");
       }
     },
+    tags: ["api"],
+    response: { schema: HotelArraySpec, failAction: validationError },
+    description: "Get all hotelApi",
+    notes: "Returns all hotelApi",
   },
 
   findOne: {
@@ -29,6 +35,11 @@ export const hotelApi = {
         return Boom.serverUnavailable("No hotel with this id");
       }
     },
+    tags: ["api"],
+    description: "Find a Hotel",
+    notes: "Returns a hotel",
+    validate: { params: { id: IdSpec }, failAction: validationError },
+    response: { schema: HotelSpecPlus, failAction: validationError },
   },
 
   create: {
@@ -45,9 +56,14 @@ export const hotelApi = {
         return Boom.serverUnavailable("Database Error");
       }
     },
+    tags: ["api"],
+    description: "Create a hotel",
+    notes: "Returns the newly created hotel",
+    validate: { payload: HotelSpec },
+    response: { schema: HotelSpecPlus, failAction: validationError },
   },
 
-  deleteAll: {
+  deleteAllHotels: {
     auth: false,
     handler: async function (request, h) {
       console.log("hotelApi deleteAll handler started");
@@ -58,6 +74,8 @@ export const hotelApi = {
         return Boom.serverUnavailable("Database Error");
       }
     },
+    tags: ["api"],
+    description: "Delete all hotelApi",
   },
 
   deleteOne: {
@@ -77,5 +95,8 @@ export const hotelApi = {
         return Boom.serverUnavailable("No Hotel with this id");
       }
     },
+    tags: ["api"],
+    description: "Delete a hotel",
+    validate: { params: { id: IdSpec }, failAction: validationError },
   },
 };

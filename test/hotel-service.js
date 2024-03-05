@@ -86,6 +86,8 @@ export const hotelService = {
 
   async createHotel(listId, hotel) {
     console.log("hotelService createHotel started");
+    console.log(`listId: ${listId}`);
+    console.log(hotel);
     const res = await axios.post(`${this.hotelUrl}/api/hotellists/${listId}/hotels`, hotel);
     console.log("hotelService createHotel completed");
     return res.data;

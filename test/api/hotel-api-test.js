@@ -23,6 +23,10 @@ suite("Hotel API tests", () => {
 
   test("create hotel", async () => {
     const returnedHotel = await hotelService.createHotel(favPlaces._id, testHotel);
+    console.log(`testHotel: ${testHotel}`);
+    console.log(testHotel);
+    console.log(`returnedHotel: ${returnedHotel}`);
+    console.log(returnedHotel);
     assertSubset(testHotel, returnedHotel);
   });
 

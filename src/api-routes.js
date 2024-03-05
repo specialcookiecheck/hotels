@@ -9,7 +9,7 @@ export const apiRoutes = [
   { method: "GET", path: "/api/users/{id}", config: userApi.findOne },
 
   { method: "POST", path: "/api/hotellists", config: hotelListApi.create },
-  { method: "DELETE", path: "/api/hotellists", config: hotelListApi.deleteAll },
+  { method: "DELETE", path: "/api/hotellists", config: hotelListApi.deleteAllHotelLists },
   { method: "GET", path: "/api/hotellists", config: hotelListApi.find },
   { method: "GET", path: "/api/hotellists/{id}", config: hotelListApi.findOne },
   { method: "DELETE", path: "/api/hotellists/{id}", config: hotelListApi.deleteOne },
@@ -17,6 +17,6 @@ export const apiRoutes = [
   { method: "GET", path: "/api/hotels", config: hotelApi.find },
   { method: "GET", path: "/api/hotels/{id}", config: hotelApi.findOne },
   { method: "POST", path: "/api/hotellists/{id}/hotels", config: hotelApi.create },
-  { method: "DELETE", path: "/api/hotels", config: hotelApi.deleteAll },
+  { method: "DELETE", path: "/api/hotels", config: hotelApi.deleteAllHotels },
   { method: "DELETE", path: "/api/hotels/{id}", config: hotelApi.deleteOne },
 ];
