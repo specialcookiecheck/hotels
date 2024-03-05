@@ -29,8 +29,11 @@ export const hotelListMongoStore = {
     console.log("hotelListMongoStore addHotelList started");
     const newHotelList = new HotelList(hotelList);
     const hotelListObj = await newHotelList.save();
+    const newHotelListId = await this.getHotelListById(hotelListObj._id);
+    console.log(`newHotelListId: ${newHotelListId}`);
+    console.log(newHotelListId);
     console.log("hotelListMongoStore addHotelList completed");
-    return this.getHotelListById(hotelListObj._id);
+    return newHotelListId;
   },
 
   async getUserHotelLists(id) {
