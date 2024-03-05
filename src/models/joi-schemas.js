@@ -20,12 +20,19 @@ export const UserCredentialsSpec = {
     password: Joi.string().required(),
   };
   
-  export const HotelSpec = {
-    name: Joi.string().required(),
-    city: Joi.string().required(),
-    airport: Joi.string().required(),
-  };
-  
-  export const HotelListSpec = {
-    title: Joi.string().required(),
-  };
+export const HotelSpec = {
+  name: Joi.string().required(),
+  city: Joi.string().required(),
+  airport: Joi.string().required(),
+};
+
+export const HotelListSpec = {
+  title: Joi.string().required(),
+};
+
+export const JwtAuth = Joi.object()
+.keys({
+  success: Joi.boolean().example("true").required(),
+  token: Joi.string().example("eyJhbGciOiJND.g5YmJisIjoiaGYwNTNjAOhE.gCWGmY5-YigQw0DCBo").required(),
+})
+.label("JwtAuth");

@@ -7,6 +7,11 @@ export const vinc = {
     password: "mona",
   };
 
+export const vincCredentials = {
+  email: "vinc@davinci.com",
+  password: "mona"
+};
+
 export const testUsers = [
   {
     firstName: "Homer",

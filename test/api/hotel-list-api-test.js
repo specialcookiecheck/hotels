@@ -2,17 +2,20 @@ import { EventEmitter } from "events";
 import { assert } from "chai";
 import { hotelService } from "../hotel-service.js";
 import { assertSubset } from "../test-utils.js";
-
-import { vinc, testHotel, testHotelLists } from "../fixtures.js";
+import { vinc, vincCredentials, testHotel, testHotelLists } from "../fixtures.js";
 
 suite("HotelList API tests", () => {
 
   let user = null;
 
   setup(async () => {
+    hotelService.clearAuth();
+    user = await hotelService.createUser(vinc);
+    await hotelService.authenticate(vincCredentials);
     await hotelService.deleteAllHotelLists();
     await hotelService.deleteAllUsers();
     user = await hotelService.createUser(vinc);
+    await hotelService.authenticate(vincCredentials);
     testHotel.userid = user._id;
   });
 

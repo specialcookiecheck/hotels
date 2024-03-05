@@ -1,15 +1,21 @@
+import { EventEmitter } from "events";
 import { assert } from "chai";
 import { hotelService } from "../hotel-service.js";
 import { assertSubset } from "../test-utils.js";
-import { vinc, testUsers } from "../fixtures.js";
+import { vinc, vincCredentials, testUsers } from "../fixtures.js";
 
 suite("User API tests", () => {
     setup(async () => {
-        await hotelService.deleteAllUsers();
-        for (let i = 0; i < testUsers.length; i += 1) {
-          // eslint-disable-next-line no-await-in-loop
-          testUsers[i] = await hotelService.createUser(testUsers[i]);
-        }
+      hotelService.clearAuth();
+      await hotelService.createUser(vinc);
+      await hotelService.authenticate(vincCredentials);
+      await hotelService.deleteAllUsers();
+      for (let i = 0; i < testUsers.length; i += 1) {
+        // eslint-disable-next-line no-await-in-loop
+        testUsers[i] = await hotelService.createUser(testUsers[i]);
+      }
+      await hotelService.createUser(vinc);
+      await hotelService.authenticate(vincCredentials);
       });
   teardown(async () => {
   });
@@ -22,10 +28,11 @@ suite("User API tests", () => {
 
   test("delete all users", async () => {
     let returnedUsers = await hotelService.getAllUsers();
-    // assert.equal(returnedUsers.length, 3);
     await hotelService.deleteAllUsers();
+    await hotelService.createUser(vinc);
+    await hotelService.authenticate(vincCredentials);
     returnedUsers = await hotelService.getAllUsers();
-    assert.equal(returnedUsers.length, 0);
+    assert.equal(returnedUsers.length, 1);
   });
 
   test("get a user - success", async () => {
@@ -44,6 +51,8 @@ suite("User API tests", () => {
 
     test("get a user - deleted user", async () => {
         await hotelService.deleteAllUsers();
+        await hotelService.createUser(vinc);
+        await hotelService.authenticate(vincCredentials);
         try {
           const returnedUser = await hotelService.getUser(testUsers[0]._id);
           assert.fail("Should not return a response");
@@ -52,3 +61,5 @@ suite("User API tests", () => {
         }
       });
 });
+
+EventEmitter.setMaxListeners(25);

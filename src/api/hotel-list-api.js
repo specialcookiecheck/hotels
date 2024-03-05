@@ -3,7 +3,9 @@ import { db } from "../models/db.js";
 
 export const hotelListApi = {
   find: {
-    auth: false,
+    auth: {
+      strategy: "jwt",
+    },
     handler: async function (request, h) {
       try {
         const hotelLists = await db.hotelListStore.getAllHotelLists();
@@ -15,7 +17,9 @@ export const hotelListApi = {
   },
 
   findOne: {
-    auth: false,
+    auth: {
+      strategy: "jwt",
+    },
     async handler(request) {
       try {
         const hotelList = await db.hotelListStore.getHotelListById(request.params.id);
@@ -30,7 +34,9 @@ export const hotelListApi = {
   },
 
   create: {
-    auth: false,
+    auth: {
+      strategy: "jwt",
+    },
     handler: async function (request, h) {
       try {
         const hotelList = request.payload;
@@ -46,7 +52,9 @@ export const hotelListApi = {
   },
 
   deleteOne: {
-    auth: false,
+    auth: {
+      strategy: "jwt",
+    },
     handler: async function (request, h) {
       try {
         const hotelList = await db.hotelListStore.getHotelListById(request.params.id);
@@ -62,7 +70,9 @@ export const hotelListApi = {
   },
 
   deleteAll: {
-    auth: false,
+    auth: {
+      strategy: "jwt",
+    },
     handler: async function (request, h) {
       try {
         await db.hotelListStore.deleteAllHotelLists();

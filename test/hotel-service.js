@@ -111,4 +111,18 @@ export const hotelService = {
     console.log("hotelService deleteHotel completed");
     return res.data;
   },
+
+  async authenticate(user) {
+    console.log("hotelService authenticate started");
+    const response = await axios.post(`${this.hotelUrl}/api/users/authenticate`, user);
+    axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.token;
+    console.log("hotelService authenticate completed");
+    return response.data;
+  },
+
+  async clearAuth() {
+    console.log("hotelService clearAuth started");
+    axios.defaults.headers.common["Authorization"] = "";
+    console.log("hotelService clearAuth completed");
+  }
 };
