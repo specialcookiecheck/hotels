@@ -1,12 +1,17 @@
 import Boom from "@hapi/boom";
 import { db } from "../models/db.js";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { UserCredentialsSpec, UserSpec, IdSpec, UserArray, JwtAuth } from "../models/joi-schemas.js";
 =======
 import { UserSpec, UserSpecPlus, IdSpec, UserArray } from "../models/joi-schemas.js";
 >>>>>>> c5796beeb61c5892f061aa2b5910e69772801ad6
 import { validationError } from "./logger.js";
 import { createToken } from "./jwt-utils.js";
+=======
+import { UserSpec, UserSpecPlus, IdSpec, UserArray } from "../models/joi-schemas.js";
+import { validationError } from "./logger.js";
+>>>>>>> a768ccebcd5b1caced9fb07ad4bb02263a913963
 
 export const userApi = {
   find: {
@@ -35,9 +40,13 @@ export const userApi = {
     handler: async function (request, h) {
       console.log("userApi findOne handler started");
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
       console.log(`request.params.id: ${request.params.id}`);
 >>>>>>> c5796beeb61c5892f061aa2b5910e69772801ad6
+=======
+      console.log(`request.params.id: ${request.params.id}`);
+>>>>>>> a768ccebcd5b1caced9fb07ad4bb02263a913963
       try {
         const user = await db.userStore.getUserById(request.params.id);
         if (!user) {
@@ -58,10 +67,14 @@ export const userApi = {
   create: {
     auth: false,
 <<<<<<< HEAD
+<<<<<<< HEAD
     handler: async function(request, h) {
 =======
     handler: async function (request, h) {
 >>>>>>> c5796beeb61c5892f061aa2b5910e69772801ad6
+=======
+    handler: async function (request, h) {
+>>>>>>> a768ccebcd5b1caced9fb07ad4bb02263a913963
       console.log("userApi create handler started");
       try {
         const user = await db.userStore.addUser(request.payload);
@@ -82,6 +95,7 @@ export const userApi = {
 
   deleteAllUsers: {
 <<<<<<< HEAD
+<<<<<<< HEAD
     auth: {
       strategy: "jwt",
     },
@@ -90,6 +104,10 @@ export const userApi = {
     auth: false,
     handler: async function (request, h) {
 >>>>>>> c5796beeb61c5892f061aa2b5910e69772801ad6
+=======
+    auth: false,
+    handler: async function (request, h) {
+>>>>>>> a768ccebcd5b1caced9fb07ad4bb02263a913963
       console.log("userApi deleteAllUsers handler started");
       try {
         await db.userStore.deleteAllUsers();

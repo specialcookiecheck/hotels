@@ -6,6 +6,8 @@ import { vinc, vincCredentials, testUsers } from "../fixtures.js";
 
 const users = new Array(testUsers.length);
 
+const users = new Array(testUsers.length);
+
 suite("User API tests", () => {
     setup(async () => {
 <<<<<<< HEAD

@@ -70,11 +70,14 @@ export const hotelApi = {
   },
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   deleteAll: {
     auth: {
       strategy: "jwt",
     },
 =======
+=======
+>>>>>>> a768ccebcd5b1caced9fb07ad4bb02263a913963
   deleteAllHotels: {
     auth: false,
 >>>>>>> c5796beeb61c5892f061aa2b5910e69772801ad6

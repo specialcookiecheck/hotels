@@ -22,6 +22,7 @@ export const UserSpecPlus = UserSpec.keys({
 export const UserArray = Joi.array().items(UserSpecPlus).label("UserArray");
   
 <<<<<<< HEAD
+<<<<<<< HEAD
 export const HotelSpec = {
   name: Joi.string().required(),
   city: Joi.string().required(),
@@ -39,6 +40,8 @@ export const JwtAuth = Joi.object()
 })
 .label("JwtAuth");
 =======
+=======
+>>>>>>> a768ccebcd5b1caced9fb07ad4bb02263a913963
 export const HotelSpec = Joi.object()
   .keys({
     name: Joi.string().required().example("Waldorf Astoria"),
@@ -68,5 +71,9 @@ export const HotelListSpecPlus = HotelListSpec.keys({
   __v: Joi.number(),
 }).label("HotelListPlus");
 
+<<<<<<< HEAD
 export const HotelListArraySpec = Joi.array().items(HotelListSpecPlus).label("HotelListArray");
 >>>>>>> c5796beeb61c5892f061aa2b5910e69772801ad6
+=======
+export const HotelListArraySpec = Joi.array().items(HotelListSpecPlus).label("HotelListArray");
+>>>>>>> a768ccebcd5b1caced9fb07ad4bb02263a913963
