@@ -22,4 +22,6 @@ export const webRoutes = [
 
   { method: "GET", path: "/dashboard/deletehotellist/{id}", config: dashboardController.deleteHotelList },
   { method: "GET", path: "/hotellist/{id}/deletehotel/{hotelid}", config: hotelListController.deleteHotel },
+
+  { method: "GET", path: "/{param*}", handler: { directory: { path: "./public" } }, options: { auth: false } } // wild card pattern for images
 ];
