@@ -33,9 +33,9 @@ export const accountsController = {
     },
     handler: async function (request, h) {
         console.log("accountsController signup handler started")
-        console.log("accountsController signup handler completed, returning")
         const user = request.payload;
         await db.userStore.addUser(user);
+        console.log("accountsController signup handler completed, returning")
         return h.redirect("login");
     },
   },
