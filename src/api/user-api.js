@@ -1,6 +1,6 @@
 import Boom from "@hapi/boom";
 import { db } from "../models/db.js";
-import { UserCredentialsSpec, UserSpec, IdSpec, UserArray, JwtAuth } from "../models/joi-schemas.js";
+import { UserCredentialsSpec, UserSpec, UserSpecPlus, IdSpec, UserArray, JwtAuth } from "../models/joi-schemas.js";
 import { validationError } from "./logger.js";
 import { createToken } from "./jwt-utils.js";
 
@@ -45,7 +45,7 @@ export const userApi = {
     description: "Get a specific user",
     notes: "Returns user details",
     validate: { params: { id: IdSpec }, failAction: validationError },
-    response: { schema: UserSpec, failAction: validationError },
+    response: { schema: UserSpecPlus, failAction: validationError },
   },
 
   create: {
@@ -53,6 +53,7 @@ export const userApi = {
     handler: async function(request, h) {
       console.log("userApi create handler started");
       try {
+        console.log(request.payload);
         const user = await db.userStore.addUser(request.payload);
         if (user) {
           return h.response(user).code(201);
@@ -66,7 +67,7 @@ export const userApi = {
     description: "Create a User",
     notes: "Returns the newly created user",
     validate: { payload: UserSpec, failAction: validationError },
-    response: { schema: UserSpec, failAction: validationError },
+    response: { schema: UserSpecPlus, failAction: validationError },
   },
 
   deleteAllUsers: {

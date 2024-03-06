@@ -26,8 +26,8 @@ if (result.error) {
 
 const swaggerOptions = {
   info: {
-    title: "Playtime API",
-    version: "0.1"
+    title: "Hotels! API",
+    version: "1.0"
   },
   securityDefinitions: {
     jwt: {

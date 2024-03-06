@@ -23,11 +23,13 @@ export const userMongoStore = {
 
   async addUser(user) {
     console.log("userMongoStore addUser started");
+    console.log(user);
     const newUser = new User(user);
     const userObj = await newUser.save();
-    const returnableUser = await this.getUserById(userObj._id);
+    const returnedUser = await this.getUserById(userObj._id);
+    console.log(returnedUser);
     console.log("userMongoStore addUser completed");
-    return returnableUser;
+    return returnedUser;
   },
 
   async getUserByEmail(email) {

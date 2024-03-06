@@ -4,14 +4,17 @@ import { hotelService } from "../hotel-service.js";
 import { assertSubset } from "../test-utils.js";
 import { vinc, vincCredentials, testUsers } from "../fixtures.js";
 
+const testUsersCopy = testUsers;
 suite("User API tests", () => {
     setup(async () => {
       hotelService.clearAuth();
+      console.log(testUsers);
       await hotelService.createUser(vinc);
       await hotelService.authenticate(vincCredentials);
       await hotelService.deleteAllUsers();
+      console.log(testUsers);
       for (let i = 0; i < testUsers.length; i += 1) {
-        // eslint-disable-next-line no-await-in-loop
+        console.log(testUsers[i]);
         testUsers[i] = await hotelService.createUser(testUsers[i]);
       }
       await hotelService.createUser(vinc);
