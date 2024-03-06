@@ -3,7 +3,9 @@ import { db } from "../models/db.js";
 
 export const hotelApi = {
   find: {
-    auth: false,
+    auth: {
+      strategy: "jwt",
+    },
     handler: async function (request, h) {
       console.log("hotelApi find handler started");
       try {
@@ -16,7 +18,9 @@ export const hotelApi = {
   },
 
   findOne: {
-    auth: false,
+    auth: {
+      strategy: "jwt",
+    },
     async handler(request) {
       console.log("hotelApi findOne handler started");
       try {
@@ -32,7 +36,9 @@ export const hotelApi = {
   },
 
   create: {
-    auth: false,
+    auth: {
+      strategy: "jwt",
+    },
     handler: async function (request, h) {
       console.log("hotelApi create handler started");
       try {
@@ -48,7 +54,9 @@ export const hotelApi = {
   },
 
   deleteAll: {
-    auth: false,
+    auth: {
+      strategy: "jwt",
+    },
     handler: async function (request, h) {
       console.log("hotelApi deleteAll handler started");
       try {
@@ -61,7 +69,9 @@ export const hotelApi = {
   },
 
   deleteOne: {
-    auth: false,
+    auth: {
+      strategy: "jwt",
+    },
     handler: async function (request, h) {
       console.log("hotelApi deleteOne handler started");
       try {

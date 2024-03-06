@@ -1,17 +1,22 @@
+import { EventEmitter } from "events";
 import { assert } from "chai";
 import { assertSubset } from "../test-utils.js";
 import { hotelService } from "../hotel-service.js";
-import { vinc, testHotelLists, testHotels, testHotel } from "../fixtures.js";
+import { vinc, vincCredentials, testHotelLists, testHotels, testHotel } from "../fixtures.js";
 
 suite("Hotel API tests", () => {
   let user = null;
   let favPlaces = null;
 
   setup(async () => {
-    await hotelService.deleteAllHotelLists();
-    await hotelService.deleteAllUsers();
-    await hotelService.deleteAllHotels();
+    hotelService.clearAuth();
     user = await hotelService.createUser(vinc);
+    await hotelService.authenticate(vincCredentials);
+    await hotelService.deleteAllHotelLists();
+    await hotelService.deleteAllHotels();
+    await hotelService.deleteAllUsers();
+    user = await hotelService.createUser(vinc);
+    await hotelService.authenticate(vincCredentials);
     testHotelLists[0].userid = user._id;
     favPlaces = await hotelService.createHotelList(testHotelLists[0]);
     console.log(`user: ${user}`);
@@ -69,3 +74,5 @@ suite("Hotel API tests", () => {
     }
   });
 });
+
+EventEmitter.setMaxListeners(25);
