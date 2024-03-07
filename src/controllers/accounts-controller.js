@@ -33,9 +33,9 @@ export const accountsController = {
     },
     handler: async function (request, h) {
         console.log("accountsController signup handler started")
-        console.log("accountsController signup handler completed, returning")
         const user = request.payload;
         await db.userStore.addUser(user);
+        console.log("accountsController signup handler completed, returning")
         return h.redirect("login");
     },
   },
@@ -82,7 +82,8 @@ export const accountsController = {
   },
 
   async validate(request, session) {
-      console.log("accountsController validate completed, returning")
+      console.log("accountsController validate started");
+      console.log(`session.id: ${session.id}`);
       const user = await db.userStore.getUserById(session.id);
       if (!user) {
         return { isValid: false };

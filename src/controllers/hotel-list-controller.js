@@ -42,6 +42,7 @@ export const hotelListController = {
     handler: async function (request, h) {
         console.log("hotelListController addHotel handler started");
         const hotelList = await db.hotelListStore.getHotelListById(request.params.id);
+        console.log(hotelList);
         //  console.log(`hotelList: ${hotelList}`); // for testing
         //  console.log(hotelList); // for testing
         const newHotel = {

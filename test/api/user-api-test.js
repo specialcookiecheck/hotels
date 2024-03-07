@@ -39,6 +39,8 @@ suite("User API tests", () => {
   });
 
   test("get a user - success", async () => {
+    await hotelService.createUser(vinc);
+    await hotelService.authenticate(vincCredentials);
     const returnedUser = await hotelService.getUser(testUsers[0]._id);
     assert.deepEqual(testUsers[0], returnedUser);
   });
