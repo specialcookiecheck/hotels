@@ -7,6 +7,7 @@ export const dashboardController = {
     handler: async function (request, h) {
       console.log("dashboardController index handler started");
       const loggedInUser = request.auth.credentials;
+      console.log(loggedInUser);
       // const hotelLists = await db.hotelListStore.getUserHotelLists(loggedInUser._id);
       const hotelLists = await db.hotelListStore.getUserHotelLists(loggedInUser._id); // auth login
       // const hotelLists = await db.hotelListStore.getAllHotelLists(); originial

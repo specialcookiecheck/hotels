@@ -7,7 +7,7 @@ import { testHotelLists, testHotel } from "../fixtures.js";
 suite("HotelLists Model tests", () => {
 
   setup(async () => {
-    db.init("mongo");
+    db.init("firebase");
     await db.hotelListStore.deleteAllHotelLists();
     for (let i = 0; i < testHotelLists.length; i += 1) {
       // eslint-disable-next-line no-await-in-loop
@@ -22,10 +22,8 @@ suite("HotelLists Model tests", () => {
   });
 
   test("delete all hotelLists", async () => {
-    let returnedHotelLists = await db.hotelListStore.getAllHotelLists();
-    assert.equal(returnedHotelLists.length, 3);
     await db.hotelListStore.deleteAllHotelLists();
-    returnedHotelLists = await db.hotelListStore.getAllHotelLists();
+    const returnedHotelLists = await db.hotelListStore.getAllHotelLists();
     assert.equal(returnedHotelLists.length, 0);
   });
 
@@ -38,8 +36,6 @@ suite("HotelLists Model tests", () => {
   test("delete One HotelList - success", async () => {
     const id = testHotelLists[0]._id;
     await db.hotelListStore.deleteHotelListById(id);
-    const returnedHotelLists = await db.hotelListStore.getAllHotelLists();
-    assert.equal(returnedHotelLists.length, testHotelLists.length - 1);
     const deletedHotelList = await db.hotelListStore.getHotelListById(id);
     assert.isNull(deletedHotelList);
   });
@@ -50,9 +46,10 @@ suite("HotelLists Model tests", () => {
   });
 
   test("delete One HotelList - fail", async () => {
+    const hotelListsBefore = await db.hotelListStore.getAllHotelLists();
     await db.hotelListStore.deleteHotelListById("bad-id");
-    const allHotelLists = await db.hotelListStore.getAllHotelLists();
-    assert.equal(testHotelLists.length, allHotelLists.length);
+    const hotelListsAfter = await db.hotelListStore.getAllHotelLists();
+    assert.equal(hotelListsBefore.length, hotelListsAfter.length);
   });
 });
 

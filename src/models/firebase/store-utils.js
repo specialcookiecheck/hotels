@@ -1,20 +1,44 @@
-import { initializeApp } from "firebase/app";
-import { getDatabase, ref, set } from "firebase/database";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyD8eTyxD_Gj9IIXWpweBIR6BQ-vF20DLEI",
-  authDomain: "hotels-9ad0d.firebaseapp.com",
-  databaseURL: "https://hotels-9ad0d-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "hotels-9ad0d",
-  storageBucket: "hotels-9ad0d.appspot.com",
-  messagingSenderId: "766917402358",
-  appId: "1:766917402358:web:247d768c40b822b5a756d7",
-  measurementId: "G-GSW3YWW3GD",
-};
+// standard firestore query for deleting batches (necessary for deleteCollection())
+export async function deleteQueryBatch(db, query, resolve) {
+  console.log("deleteQueryBatch started");
+  const snapshot = await query.get();
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+  const batchSize = snapshot.size;
+  if (batchSize === 0) {
+    // When there are no documents left, we are done
+    resolve();
+    return;
+  }
 
+  // Delete documents in a batch
+  const batch = db.batch();
+  snapshot.docs.forEach((doc) => {
+    batch.delete(doc.ref);
+  });
+  await batch.commit();
+
+  // Recurse on the next process tick, to avoid
+  // exploding the stack.
+  process.nextTick(() => {
+    deleteQueryBatch(db, query, resolve);
+  });
+}
+
+// standard firestore query for deleting collections (uses deleteQueryBatch())
+export async function deleteCollection(db, collectionPath, batchSize) {
+  console.log("deleteCollection started");
+  const collectionRef = db.collection(collectionPath);
+  const query = collectionRef.orderBy("__name__").limit(batchSize);
+
+  return new Promise((resolve, reject) => {
+    deleteQueryBatch(db, query, resolve).catch(reject);
+  });
+}
+
+
+
+/*
 // Initialize Realtime Database and get a reference to the service
 export const db = getDatabase(app);
 

@@ -11,10 +11,10 @@ import { userMongoStore } from "./mongo/user-mongo-store.js";
 import { hotelListMongoStore } from "./mongo/hotel-list-mongo-store.js";
 import { hotelMongoStore } from "./mongo/hotel-mongo-store.js";
 
-// import { connectFirebase } from "./firebase/connect.js";
+import { connectFirebase } from "./firebase/connect.js";
 import { userFirebaseStore } from "./firebase/user-firebase-store.js";
-// import { hotelListFirebaseStore } from "./firebase/hotel-list-firebase-store.js";
-// import { hotelFirebaseStore } from "./firebase/hotel-firebase-store.js";
+import { hotelListFirebaseStore } from "./firebase/hotel-list-firebase-store.js";
+import { hotelFirebaseStore } from "./firebase/hotel-firebase-store.js";
 
 
 
@@ -38,9 +38,9 @@ export const db = {
         break;
       case "firebase": 
         this.userStore = userFirebaseStore;
-        // this.hotelListStore = hotelListFirebaseStore;
-        // this.hotelStore = hotelFirebaseStore;
-        // connectFirebase();
+        this.hotelListStore = hotelListFirebaseStore;
+        this.hotelStore = hotelFirebaseStore;
+        connectFirebase();
         break;
       default:
         this.userStore = userMemStore;

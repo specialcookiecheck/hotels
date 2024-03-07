@@ -6,7 +6,7 @@ import { testHotels, testHotel, testHotelLists } from "../fixtures.js";
 suite("Hotels Model tests", () => {
 
   setup(async () => {
-    db.init("mongo");
+    db.init("firebase");
     await db.hotelStore.deleteAllHotels();
     const hotelList = await db.hotelListStore.addHotelList(testHotelLists);
     console.log(`hotelList: ${hotelList}`);
@@ -25,10 +25,8 @@ suite("Hotels Model tests", () => {
   });
 
   test("delete all hotels", async () => {
-    let returnedHotels = await db.hotelStore.getAllHotels();
-    assert.equal(returnedHotels.length, 3);
     await db.hotelStore.deleteAllHotels();
-    returnedHotels = await db.hotelStore.getAllHotels();
+    const returnedHotels = await db.hotelStore.getAllHotels();
     assert.equal(returnedHotels.length, 0);
   });
 

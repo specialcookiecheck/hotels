@@ -1,41 +1,24 @@
-import { initializeApp } from "firebase/app";
-import { getDatabase } from "firebase/database";
+import pkg from "firebase-admin";
+import serviceAccount from "../../../serviceaccount.json" assert { type: "json" };
 
-// TODO: Replace the following with your app's Firebase project configuration
-// See: https://firebase.google.com/docs/web/learn-more#config-object
-const firebaseConfig = {
-  apiKey: "AIzaSyD8eTyxD_Gj9IIXWpweBIR6BQ-vF20DLEI",
-  authDomain: "hotels-9ad0d.firebaseapp.com",
-  databaseURL: "https://hotels-9ad0d-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "hotels-9ad0d",
-  storageBucket: "hotels-9ad0d.appspot.com",
-  messagingSenderId: "766917402358",
-  appId: "1:766917402358:web:247d768c40b822b5a756d7",
-  measurementId: "G-GSW3YWW3GD",
-};
+const admin = pkg;
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+export let db;
+
+// const serviceAccount = process.env.FIREBASE_CONFIG;
 
 
-// Initialize Realtime Database and get a reference to the service
-export const db = getDatabase(app);
-
-/*
 export function connectFirebase() {
-  
-    // const db = database;
-  
-    db.on("error", (err) => {
-      console.log(`database connection error: ${err}`);
-    });
-  
-    db.on("disconnected", () => {
-      console.log("database disconnected");
-    });
-  
-    db.once("open", function () {
-      console.log(`database connected to ${this.name} on ${this.host}`);
-    });
-  }
-  */
+  // initializeApp(process.env.FIREBASE_CONFIG); // process.env.FIREBASE_CONFIG
+
+  const app = admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+  });
+
+  // console.log(app);
+
+  // const defaultApp = initializeApp(process.env.FIREBASE_CONFIG);
+
+  db = app.firestore();
+  // console.log(db);
+}

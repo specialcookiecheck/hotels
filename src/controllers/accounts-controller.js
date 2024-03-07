@@ -82,7 +82,8 @@ export const accountsController = {
   },
 
   async validate(request, session) {
-      console.log("accountsController validate completed, returning")
+      console.log("accountsController validate started");
+      console.log(`session.id: ${session.id}`);
       const user = await db.userStore.getUserById(session.id);
       if (!user) {
         return { isValid: false };
