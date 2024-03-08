@@ -20,6 +20,7 @@ export const accountsController = {
         return h.view("signup-view", { title: "Signup for Hotels!" });
     },
   },
+  
   signup: {
     auth: false,
     validate: {
@@ -39,6 +40,7 @@ export const accountsController = {
         return h.redirect("login");
     },
   },
+
   showLogin: {
     auth: false,
     handler: function (request, h) {
@@ -67,6 +69,9 @@ export const accountsController = {
         }
         request.cookieAuth.set({ id: user._id });
         console.log("accountsController login handler completed, returning")
+        if (user.email === process.env.ADMIN_EMAIL) {
+          return h.redirect("/admin");
+        }
         return h.redirect("/dashboard");
     },
   },

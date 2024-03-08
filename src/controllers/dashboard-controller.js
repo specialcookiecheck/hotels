@@ -17,6 +17,9 @@ export const dashboardController = {
         user: loggedInUser,
         hotelLists: hotelLists,
       };
+      if (loggedInUser.email === process.env.ADMIN_EMAIL) {
+        viewData.admin = true;
+      }
       console.log("dashboardController index handler completed, returning")
       return h.view("dashboard-view", viewData);
     },
@@ -35,14 +38,15 @@ export const dashboardController = {
             title: "Add HotelList error",
             hotelLists: hotelLists,
             errors: error.details,
+            user: loggedInUser,
         };
         console.log("dashboardController addHotelList failAction completed, returning");
         return h.view("dashboard-view", viewData).takeover().code(400);
       },
     },
     handler: async function (request, h) {
-      console.log("dashboardController addHotelList handler started");
       const loggedInUser = request.auth.credentials;
+      console.log("dashboardController addHotelList handler started");
       const newHotelList = {
         userid: loggedInUser._id,
         title: request.payload.title,

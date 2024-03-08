@@ -1,0 +1,45 @@
+{{> menu active="admin-dashboard"}}
+
+<section class="section">
+    <h2 class="title">
+    {{title}}
+    </h2>
+</section>
+
+<section class="section">
+    <div class="box box-link-hover-shadow">
+        <h3 class="subtitle">Manage All Users</h3>
+
+        <button class="is-danger"><a href="/admin/users/deleteallusers">Delete ALL Users</a></button>
+
+        <a href="/admin/users" class="button">
+            <span class="icon is-small">
+            <i class="fas fa-folder-open"></i>
+            </span>
+        </a>
+    </div>
+
+    <div class="box box-link-hover-shadow">
+        <h3 class="subtitle">Manage All Hotels</h3>
+
+        <button class="is-danger"><a href="/admin/hotels/deleteallhotels">Delete ALL Hotels</a></button>
+
+        <a href="/admin/hotels" class="button">
+            <span class="icon is-small">
+            <i class="fas fa-folder-open"></i>
+            </span>
+        </a>
+    </div>
+
+    <div class="box box-link-hover-shadow">
+        <h3 class="subtitle">Manage All Hotel lists</h3>
+
+        <button class="is-danger"><a href="/admin/hotellists/deleteallhotellists">Delete ALL Hotel Lists</a></button>
+        
+        <a href="/admin/hotellists" class="button">
+            <span class="icon is-small">
+            <i class="fas fa-folder-open"></i>
+            </span>
+        </a>
+    </div>
+</section>

@@ -6,7 +6,7 @@ import { deleteCollection } from "./store-utils.js";
 export const userFirebaseStore = {
 
   async addUser(user) {
-    console.log("userFirebaseStore addUser started");
+    console.log(`userFirebaseStore addUser ${user.email} started`);
     const userId = v4();
     user._id = userId;
     user = Object.setPrototypeOf(user, Object.prototype);
@@ -15,7 +15,7 @@ export const userFirebaseStore = {
     } catch(error) {
       console.log(error);
     }
-    console.log("userFirebaseStore addUser completed");
+    console.log(`userFirebaseStore addUser ${user.email} completed`);
     return user;
   },
 

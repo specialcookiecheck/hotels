@@ -10,7 +10,9 @@
   <body>
     <div class="container">
       {{{content}}}
+      {{#unless admin}}
       {{> error }}
+      {{/unless}}
     </div>
   </body>
 </html>

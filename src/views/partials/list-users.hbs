@@ -1,0 +1,27 @@
+    
+      {{#each userList}}
+        <tr>
+          <td>
+            {{firstName}}
+          </td>
+          <td>
+            {{lastName}}
+          </td>
+          <td>
+            {{email}}
+          </td>
+          <td>
+            {{#if password}}
+            **password present**
+            {{/if}}
+          </td>
+          <td>
+            {{_id}}
+          </td>
+          <td>
+            <a href="/admin/users/deleteuser/{{_id}}" class="ui icon button">
+              <i class="fas fa-trash"></i>
+            </a>
+          </td>
+        </tr>
+      {{/each}}
