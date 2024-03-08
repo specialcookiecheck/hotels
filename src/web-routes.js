@@ -1,5 +1,6 @@
 import { accountsController } from "./controllers/accounts-controller.js";
 import { dashboardController } from "./controllers/dashboard-controller.js";
+import { adminController } from "./controllers/admin-controller.js";
 import { aboutController } from "./controllers/about-controller.js";
 import { hotelListController } from "./controllers/hotel-list-controller.js";
 
@@ -14,6 +15,20 @@ export const webRoutes = [
 
   { method: "GET", path: "/dashboard", config: dashboardController.index },
   { method: "POST", path: "/dashboard/addhotellist", config: dashboardController.addHotelList },
+
+  { method: "GET", path: "/admin", config: adminController.index },
+  { method: "GET", path: "/admin/users", config: adminController.listAllUsersIndex },
+  { method: "GET", path: "/admin/hotellists", config: adminController.listAllHotelListsIndex },
+  { method: "GET", path: "/admin/hotels", config: adminController.listAllHotelsIndex },
+  { method: "POST", path: "/admin/hotels/addhotel", config: adminController.addHotel },
+  { method: "POST", path: "/admin/users/adduser", config: adminController.addUser },
+  { method: "POST", path: "/admin/hotellists/addhotellist", config: adminController.addHotelList },
+  { method: "GET", path: "/admin/hotellists/deletehotellist/{id}", config: adminController.deleteHotelList },
+  { method: "GET", path: "/admin/users/deleteuser/{id}", config: adminController.deleteUser },
+  { method: "GET", path: "/admin/hotels/deletehotel/{id}", config: adminController.deleteHotel },
+  { method: "GET", path: "/admin/hotellists/deleteallhotellists", config: adminController.deleteAllHotelLists },
+  { method: "GET", path: "/admin/users/deleteallusers", config: adminController.deleteAllUsers },
+  { method: "GET", path: "/admin/hotels/deleteallhotels", config: adminController.deleteAllHotels },
 
   { method: "GET", path: "/about", config: aboutController.index },
 

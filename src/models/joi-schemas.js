@@ -4,7 +4,7 @@ export const IdSpec = Joi.alternatives().try(Joi.string(), Joi.object()).descrip
 
 export const UserCredentialsSpec = Joi.object()
 .keys({
-  email: Joi.string().required(), // Joi.string().email().required(), // removed email for easier testing, put back for production
+  email: Joi.string().required(), // Joi.string().example("homer@simpson.com").email().required(), // removed email for easier testing, put back for production
   password: Joi.string().example("secret").required(),
 })
 .label("UserCredentials");
@@ -28,8 +28,16 @@ export const HotelSpec = {
   airport: Joi.string().required(),
 };
 
+export const HotelAdminSpec = {
+  name: Joi.string().required(),
+  city: Joi.string().required(),
+  airport: Joi.string().required(),
+  hotelListId: Joi.string().required(),
+};
+
 export const HotelListSpec = {
   title: Joi.string().required(),
+  email: Joi.string().required(), // Joi.string().example("homer@simpson.com").email().required(), // removed email for easier testing, put back for production
 };
 
 export const JwtAuth = Joi.object()

@@ -7,9 +7,8 @@ import HapiSwagger from "hapi-swagger";
 import Handlebars from "handlebars";
 import Joi from "joi";
 import jwt from "hapi-auth-jwt2";
-
-
 import path from "path";
+
 import { fileURLToPath } from "url";
 import { webRoutes } from "./web-routes.js";
 import { db } from "./models/db.js";
@@ -17,6 +16,12 @@ import { accountsController } from "./controllers/accounts-controller.js";
 import { apiRoutes } from "./api-routes.js";
 import { validate } from "./api/jwt-utils.js";
 
+const adminUser = {
+  firstName: "admin",
+  lastName: "admin",
+  email: process.env.ADMIN_EMAIL,
+  password: process.env.ADMIN_PASSWORD
+};
 
 const result = dotenv.config();
 if (result.error) {
@@ -93,6 +98,15 @@ async function init() {
   server.route(apiRoutes);
   await server.start();
   console.log("Server running on %s", server.info.uri);
+
+  const adminCheck = await db.userStore.getUserByEmail(process.env.ADMIN_EMAIL);
+  if (adminCheck == null || adminCheck === undefined ) {
+    console.log("no admin user in db, adding now");
+    await db.userStore.addUser(adminUser);
+    console.log(`admin user ${adminUser} added to database`);
+  } else {
+    console.log("admin user already present in db");
+  }
 }
 
 process.on("unhandledRejection", (err) => {

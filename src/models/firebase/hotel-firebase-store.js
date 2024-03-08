@@ -21,7 +21,7 @@ export const hotelFirebaseStore = {
   },
 
   async getHotelsByHotelListId(id) {
-    console.log("hotelFirebaseStore getHotelsByHotelListId started");
+    console.log(`hotelFirebaseStore getHotelsByHotelListId ${id} started`);
     const hotels = [];
     const snapshot = await db.collection("hotels").where("hotelListid", "==", id).get();
     console.log("snapshot retrieved");

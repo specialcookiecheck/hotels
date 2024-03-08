@@ -14,6 +14,7 @@
 - https://firebase.google.com/docs/firestore/query-data/get-data
 - https://stackoverflow.com/questions/72190763/find-documents-by-child-value
 - https://firebase.google.com/docs/firestore/manage-data/delete-data
+- https://stackoverflow.com/questions/12297959/access-properties-of-the-parent-with-a-handlebars-each-loop
 
 
 <br>

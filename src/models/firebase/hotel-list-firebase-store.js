@@ -70,6 +70,7 @@ export const hotelListFirebaseStore = {
       console.log(doc.id, "=>", doc.data());
       list.push(doc.data());
     });
+    console.log("list:")
     console.log(list);
     console.log("hotelListFirebaseStore getAllHotelLists completed");
     return list;
