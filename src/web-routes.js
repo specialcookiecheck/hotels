@@ -36,6 +36,10 @@ export const webRoutes = [
 
   { method: "GET", path: "/about", config: aboutController.index },
 
+  { method: "GET", path: "/account/{id}", config: accountsController.accountIndex },
+  { method: "GET", path: "/account/{id}/deleteuser", config: accountsController.deleteUser },
+  { method: "POST", path: "/account/{id}/updateuser", config: accountsController.updateUser },
+
   { method: "GET", path: "/hotellist/{id}", config: hotelListController.index },
   { method: "POST", path: "/hotellist/{id}/addhotel", config: hotelListController.addHotel },
 

@@ -81,6 +81,18 @@ export const userFirebaseStore = {
     return returnedUsers;
   },
 
+  async updateUserById(updatedUser, id) {
+    console.log("userFirebaseStore updateUserById started");
+    try {
+      await db.collection("users").doc(id).update(updatedUser);
+      console.log("document updated");
+    } catch (error) {
+      console.log("update not successful");
+      console.log(error);
+    }
+    console.log("userFirebaseStore updateUserById completed");
+  },
+
   async deleteUserById(id) {
     console.log("userFirebaseStore deleteUserById started");
     try {
