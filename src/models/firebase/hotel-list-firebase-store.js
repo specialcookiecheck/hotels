@@ -61,6 +61,31 @@ export const hotelListFirebaseStore = {
     return list;
   },
 
+  async getHotelListByTitle(title) {
+    console.log("hotelListFirebaseStore getHotelListByTitle started");
+    let list;
+    try {
+      const snapshot = await db.collection("hotelLists").where("title", "==", title).get();
+      if (!snapshot.exists) {
+        console.log("No such document!");
+      } else {
+        // console.log("Document data:", snapshot.data());
+        list = snapshot.data();
+      }
+    } catch(error) {
+      console.log(error);
+    }
+    if (list) {
+      console.log(list);
+      console.log("list retrieved, getting hotels");
+      list.hotels = await hotelFirebaseStore.getHotelsByHotelListId(list._id);
+    } else {
+      list = null;
+    }
+    console.log("hotelListFirebaseStore getHotelListByTitle completed");
+    return list;
+  },
+
   async getAllHotelLists() {
     console.log("hotelListFirebaseStore getAllHotelLists started");
     const list = [];
@@ -90,7 +115,7 @@ export const hotelListFirebaseStore = {
 
   async deleteAllHotelLists() {
     console.log("hotelListFirebaseStore deleteAllHotelLists started");
-    deleteCollection(db, "hotelLists", 100);
+    await deleteCollection(db, "hotelLists", 100);
     console.log("hotelListFirebaseStore deleteAllHotelLists completed");
   },
 };

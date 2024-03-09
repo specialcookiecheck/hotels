@@ -6,13 +6,19 @@ export const hotelListController = {
     handler: async function (request, h) {
         console.log("hotelListController index handler started")
         const hotelList = await db.hotelListStore.getHotelListById(request.params.id);
+        hotelList.hotels = await db.hotelStore.getHotelsByHotelListId(request.params.id);
         console.log(`hotelList: ${hotelList}`);
         // console.log(hotelList); // for testing
         const viewData = {
             title: "HotelList",
             hotelList: hotelList,
             listId: request.params.id,
+            hotels: hotelList.hotels,
       };
+      const loggedInUser = request.auth.credentials;
+      if (loggedInUser.email === process.env.ADMIN_EMAIL) {
+        viewData.admin = true;
+      }
       // console.log(`viewData listId: ${viewData.listId}`); // for testing
       return h.view("hotel-list-view", viewData);
     },

@@ -1,6 +1,6 @@
     
       {{#each userList}}
-        <tr>
+        <tr {{#if adminAccount}}style="background-color: red;"{{/if}}>
           <td>
             {{firstName}}
           </td>

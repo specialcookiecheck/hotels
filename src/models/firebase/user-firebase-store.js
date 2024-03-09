@@ -95,7 +95,7 @@ export const userFirebaseStore = {
 
   async deleteAllUsers() {
     console.log("userFirebaseStore deleteAllUsers started");
-    deleteCollection(db, "users", 100);
+    await deleteCollection(db, "users", 100);
     console.log("userFirebaseStore deleteAllUsers completed");
   },
 };

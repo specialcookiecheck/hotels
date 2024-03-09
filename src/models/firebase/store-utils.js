@@ -7,12 +7,12 @@ export async function deleteQueryBatch(db, query, resolve) {
   const batchSize = snapshot.size;
   if (batchSize === 0) {
     // When there are no documents left, we are done
-    resolve();
+    await resolve();
     return;
   }
 
   // Delete documents in a batch
-  const batch = db.batch();
+  const batch = await db.batch();
   snapshot.docs.forEach((doc) => {
     batch.delete(doc.ref);
   });
@@ -28,8 +28,8 @@ export async function deleteQueryBatch(db, query, resolve) {
 // standard firestore query for deleting collections (uses deleteQueryBatch())
 export async function deleteCollection(db, collectionPath, batchSize) {
   console.log("deleteCollection started");
-  const collectionRef = db.collection(collectionPath);
-  const query = collectionRef.orderBy("__name__").limit(batchSize);
+  const collectionRef = await db.collection(collectionPath);
+  const query = await collectionRef.orderBy("__name__").limit(batchSize);
 
   return new Promise((resolve, reject) => {
     deleteQueryBatch(db, query, resolve).catch(reject);

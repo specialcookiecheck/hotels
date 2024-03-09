@@ -1,8 +1,12 @@
-{{#if admin}}
+{{#unless @root.hotelList._id}}
 <form class="box" action="/admin/hotels/addhotel" method="POST">
-{{else}}
-<form class="box" action="/hotellist/{{hotelList._id}}/addhotel" method="POST">
+{{/unless}}
+
+{{#if @root.hotelList._id}}
+<form class="box" action="/admin/hotellists/{{hotelList._id}}/addhotel" method="POST">
 {{/if}}
+
+
   <label>Enter Hotel Details:</label>
   <div class="field is-horizontal">
     <div class="field-body">
@@ -15,14 +19,14 @@
       <div class="field">
         <input class="input" type="text" placeholder="Enter hotel airport" name="airport">
       </div>
-      {{#if admin}}
+      {{#unless @root.hotelList._id}}
       <div class="field">
         <input class="input" type="text" placeholder="Enter hotel list title" name="hotelListTitle">
       </div>
       <div class="field">
         <input class="input" type="text" placeholder="Enter user email" name="userEmail">
       </div>
-      {{/if}}
+      {{/unless}}
     </div>
   </div>
   <button class="button is-link">Add Hotel</button>

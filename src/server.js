@@ -20,7 +20,8 @@ const adminUser = {
   firstName: "admin",
   lastName: "admin",
   email: process.env.ADMIN_EMAIL,
-  password: process.env.ADMIN_PASSWORD
+  password: process.env.ADMIN_PASSWORD,
+  adminAccount: true,
 };
 
 const result = dotenv.config();
