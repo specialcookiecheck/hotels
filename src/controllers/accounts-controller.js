@@ -12,6 +12,20 @@ export const accountsController = {
     },
   },
 
+  accountIndex: {
+    auth: false,
+    handler: async function (request, h) {
+        console.log("accountsController index handler started")
+        const user = await db.userStore.getUserById(request.params.id);
+        const viewData = {
+          title: `${user.firstName}'s Account`,
+          user: user,
+        }
+        console.log("accountsController index handler completed, returning")
+        return h.view("account-view", viewData);
+    },
+  },
+
   showSignup: {
     auth: false,
     handler: function (request, h) {
@@ -74,6 +88,33 @@ export const accountsController = {
         }
         return h.redirect("/dashboard");
     },
+  },
+
+  updateUser: {
+    auth: false,
+    handler: async function (request, h) {
+      console.log("accountsController deleteUser handler started");
+      let updatedUser = request.payload
+      console.log(updatedUser);
+      await db.userStore.updateUserById(updatedUser, request.params.id);
+      updatedUser = await db.userStore.getUserById(request.params.id);
+        const viewData = {
+          title: `${updatedUser.firstName}'s Account`,
+          user: updatedUser,
+        }
+      console.log("accountsController deleteUser handler completed, returning");
+      return h.view("account-view", viewData);
+    }
+  },
+
+  deleteUser: {
+    auth: false,
+    handler: async function (request, h) {
+      console.log("accountsController deleteUser handler started");
+      await db.userStore.deleteUserById(request.params.id);
+      console.log("accountsController deleteUser handler completed, returning");
+      return h.redirect("/");
+    }
   },
   
   logout: {
