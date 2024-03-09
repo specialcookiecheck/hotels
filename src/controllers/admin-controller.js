@@ -1,4 +1,5 @@
 import { db } from "../models/db.js";
+import { getDatabaseCount } from "../models/firebase/store-utils.js";
 import { HotelAdminSpec, UserSpec, HotelListSpec, HotelSpec } from "../models/joi-schemas.js";
 
 
@@ -7,8 +8,14 @@ export const adminController = {
       handler: async function (request, h) {
         console.log("adminController index handler started")
         const loggedInUser = request.auth.credentials;
+        const userCount = await getDatabaseCount('users');
+        const hoteListCount = await getDatabaseCount('hotelLists');
+        const hotelCount = await getDatabaseCount('hotels');
         const viewData = {
           title: "Admin Dashboard",
+          userCount: userCount,
+          hoteListCount: hoteListCount,
+          hotelCount: hotelCount,
         };
         if (loggedInUser.email === process.env.ADMIN_EMAIL) {
             viewData.admin = true;

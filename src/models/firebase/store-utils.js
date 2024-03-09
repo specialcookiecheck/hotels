@@ -1,3 +1,4 @@
+import { db } from "./connect.js";
 
 // standard firestore query for deleting batches (necessary for deleteCollection())
 export async function deleteQueryBatch(db, query, resolve) {
@@ -36,7 +37,13 @@ export async function deleteCollection(db, collectionPath, batchSize) {
   });
 }
 
-
+export async function getDatabaseCount(collection){
+  console.log("getDatabaseCount started");
+  const snapshot = await db.collection(collection).count().get()
+  console.log(snapshot.data().count);
+  console.log("getDatabaseCount completed");
+  return snapshot.data().count
+}
 
 /*
 // Initialize Realtime Database and get a reference to the service
