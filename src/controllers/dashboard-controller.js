@@ -62,6 +62,13 @@ export const dashboardController = {
     handler: async function (request, h) {
       console.log("dashboardController deleteHotelList handler started");
       const hotelList = await db.hotelListStore.getHotelListById(request.params.id);
+      console.log("checking for hotels to be deleted")
+        const hotelsToBeDeleted = await db.hotelStore.getHotelsByHotelListId(request.params.id);
+        for (let i = 0; i < hotelsToBeDeleted.length; i++) {
+          console.log(`deleting hotel: ${hotelsToBeDeleted[i]._id}`);
+          await db.hotelStore.deleteHotelById(hotelsToBeDeleted[i]._id);
+        }
+      console.log("hotelsToBeDeleted completed, deleting list");
       await db.hotelListStore.deleteHotelListById(hotelList._id);
       console.log("dashboardController deleteHotelList handler completed, returning");
       return h.redirect("/dashboard");

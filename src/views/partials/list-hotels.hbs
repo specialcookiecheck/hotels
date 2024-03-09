@@ -4,9 +4,12 @@
       <th>Hotel name</th>
       <th>City</th>
       <th>Airport</th>
+      {{#unless @root.admin}}
+      <td></td>
+      {{/unless}}
       {{#if @root.admin}}
       <th>hotelId</td>
-      {{/if}}
+      <th>hotelListId</td>
     </tr>
   </thead>
   <tbody>
@@ -22,18 +25,51 @@
           <td>
             {{airport}}
           </td>
-          {{#if @root.admin}}
           <td>
             {{_id}}
           </td>
-          {{/if}}
           <td>
+            {{hotelListid}}
+          </td>
+          <td> 
+            {{#if hotelListid}}
+            <a href="/admin/hotellists/hotellist/{{hotelListid}}/deletehotel/{{_id}}" class="ui icon button">
+              <i class="fas fa-trash"></i>
+            </a>
+            {{else}}
             <a href="/admin/hotels/deletehotel/{{_id}}" class="ui icon button">
               <i class="fas fa-trash"></i>
             </a>
+            {{/if}}
+          </td>
           </td>
         </tr>
       {{/each}}
+
+      {{/if}}
+
+      {{#unless @root.admin}}
+  </thead>
+  <tbody>
+    
+      {{#each hotelList.hotels}}
+        <tr>
+          <td>
+            {{name}}
+          </td>
+          <td>
+            {{city}}
+          </td>
+          <td>
+            {{airport}}
+          </td>
+          <td>
+            <a href="/hotellist/{{hotelListid}}/deletehotel/{{_id}}" class="ui icon button">
+              <i class="fas fa-trash"></i>
+            </a>
+        </tr>
+      {{/each}}
+      {{/unless}}
     
   </tbody>
 </table>

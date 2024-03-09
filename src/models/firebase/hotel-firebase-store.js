@@ -93,7 +93,7 @@ export const hotelFirebaseStore = {
 
   async deleteAllHotels() {
     console.log("hotelFirebaseStore deleteAllHotels started");
-    deleteCollection(db, "hotels", 100);
+    await deleteCollection(db, "hotels", 100);
     console.log("hotelFirebaseStore deleteAllHotels completed");
   },
 

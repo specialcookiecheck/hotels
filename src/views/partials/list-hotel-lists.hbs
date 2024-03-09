@@ -1,22 +1,45 @@
 {{#each hotelLists}}
+
+{{#if @root.admin}}
   <div class="box box-link-hover-shadow">
-    <p class="subtitle">List Name:<br>
-      {{title}}
-    </p>
-    {{#if @root.admin}}
-    <h3 class="subtitle">List Id:<br>
-    {{_id}}</h3>
-    {{/if}}
-    <a href="/hotellist/{{_id}}" class="button">
+    <div class="box">
+      <h3>List Name:<br>
+        {{title}}
+      </h3>
+      <h3>List Id:<br>
+        {{_id}}
+      </h3>
+      <h3>User Email:<br>
+        {{userid}}
+      </h3>
+
+      <a href="/admin/hotellists/hotellist/{{_id}}" class="button">
       <span class="icon is-small">
-        <i class="fas fa-folder-open"></i>
-      </span>
-    </a>
-     <a href="/admin/hotellists/deletehotellist/{{_id}}" class="button">
-      <i class="fas fa-trash"></i>
-    </a>
+          <i class="fas fa-folder-open"></i>
+        </span>
+      </a>
+      <a href="/admin/hotellists/deletehotellist/{{_id}}" class="button">
+        <i class="fas fa-trash"></i>
+      </a>
+    </div>
+{{/if}}
+
+{{#unless @root.admin}}
+<div class="box box-link-hover-shadow">
+      <h3 class="title">{{title}}</h3>
+      <a href="/hotellist/{{_id}}" class="button">
+      <span class="icon is-small">
+          <i class="fas fa-folder-open"></i>
+        </span>
+      </a>
+      <a href="/dashboard/deletehotellist/{{_id}}" class="button">
+        <i class="fas fa-trash"></i>
+      </a>
+{{/unless}}
+
     {{#if ../displayHotels}}
       {{> list-hotels}}
     {{/if}}
   </div>
+  
 {{/each}}

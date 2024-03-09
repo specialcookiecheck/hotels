@@ -1,5 +1,5 @@
 import { db } from "../models/db.js";
-import { HotelAdminSpec, UserSpec, HotelListSpec } from "../models/joi-schemas.js";
+import { HotelAdminSpec, UserSpec, HotelListSpec, HotelSpec } from "../models/joi-schemas.js";
 
 
 export const adminController = {
@@ -24,7 +24,7 @@ export const adminController = {
         const loggedInUser = request.auth.credentials;
         const userList = await db.userStore.getAllUsers();
         const viewData = {
-          title: "Admin Users",
+          title: "Admin All Users",
           userList: userList,
         };
         if (loggedInUser.email === process.env.ADMIN_EMAIL) {
@@ -43,7 +43,7 @@ export const adminController = {
         console.log("hotelLists:");
         console.log(hotelLists);
         const viewData = {
-          title: "Admin Hotel Lists",
+          title: "Admin All Hotel Lists",
           hotelLists: hotelLists,
         };
         if (loggedInUser.email === process.env.ADMIN_EMAIL) {
@@ -51,6 +51,29 @@ export const adminController = {
         }
         console.log("adminController listAllHotelListsIndex handler completed, returning")
         return h.view("admin-hotel-lists-view", viewData);
+      },
+    },
+
+    hotelListIndex: {
+      handler: async function (request, h) {
+          console.log("adminController hotelListIndex handler started")
+          const hotelList = await db.hotelListStore.getHotelListById(request.params.id);
+          hotelList.hotels = await db.hotelStore.getHotelsByHotelListId(request.params.id);
+          console.log(`hotelList: ${hotelList}`);
+          // console.log(hotelList); // for testing
+          const viewData = {
+              title: "HotelList",
+              hotelList: hotelList,
+              listId: request.params.id,
+              hotels: hotelList.hotels,
+          };
+          const loggedInUser = request.auth.credentials;
+          if (loggedInUser.email === process.env.ADMIN_EMAIL) {
+            viewData.admin = true;
+          }
+          // console.log(`viewData listId: ${viewData.listId}`); // for testing
+          console.log("adminController hotelListIndex handler completed");
+        return h.view("admin-hotel-list-view", viewData);
       },
     },
 
@@ -65,18 +88,35 @@ export const adminController = {
           hotelLists[i].hotels = await db.hotelStore.getHotelsByHotelListId(hotelLists[i]._id);
           console.log(hotelLists[i]);
         }
-        // const hotels = await db.hotelStore.getAllHotels();
         const viewData = {
-          title: "Admin Hotels",
+          title: "Admin All Hotels",
           hotelLists: hotelLists,
           displayHotels: true,
-          // hotels: hotels,
+          displayListDetails: true,
         };
         if (loggedInUser.email === process.env.ADMIN_EMAIL) {
             viewData.admin = true;
         }
         console.log("adminController listAllHotelsIndex handler completed, returning")
         return h.view("admin-hotels-view", viewData);
+      },
+    },
+
+    listOnlyHotelsIndex: {
+      handler: async function (request, h) {
+        console.log("adminController listOnlyHotelsIndex handler started")
+        const loggedInUser = request.auth.credentials;
+        const hotels = await db.hotelStore.getAllHotels();
+        const viewData = {
+          title: "Admin Only Hotels",
+          displayHotels: true,
+          hotels: hotels,
+        };
+        if (loggedInUser.email === process.env.ADMIN_EMAIL) {
+            viewData.admin = true;
+        }
+        console.log("adminController listOnlyHotelsIndex handler completed, returning")
+        return h.view("admin-hotels-only-view", viewData);
       },
     },
 
@@ -89,10 +129,72 @@ export const adminController = {
           console.log(request.params);
           const hotelLists = await db.hotelListStore.getAllHotelLists();
           for (let i = 0; i < hotelLists.length; i++) {
-            console.log(`i: ${i}`);
-            console.log(hotelLists[i]._id);
             hotelLists[i].hotels = await db.hotelStore.getHotelsByHotelListId(hotelLists[i]._id);
-            console.log(hotelLists[i]);
+          }
+          const viewData = {
+              title: "Add hotel error",
+              hotelLists: hotelLists,
+              hotels: await db.hotelStore.getAllHotels(),
+              errors: error.details,
+              displayHotels: true,
+          };
+          const loggedInUser = request.auth.credentials;
+          if (loggedInUser.email === process.env.ADMIN_EMAIL) {
+            viewData.admin = true;
+          }
+          console.log(`viewData listId: ${viewData.listId}`);
+          console.log("adminController addHotel failAction completed, returning");
+          return h.view( "admin-hotels-only-view", viewData ).takeover().code(400);
+        },
+      },
+      handler: async function (request, h) {
+          console.log("adminController addHotel handler started");
+          let hotelList;
+          if (request.payload.hotelListTitle) {
+            hotelList = await db.hotelListStore.getHotelListByTitle(request.payload.hotelListTitle);
+          };
+          if (request.params.hotellistid) {
+            hotelList = await db.hotelListStore.getHotelListById(request.params.hotellistid);
+          }
+          console.log(hotelList);
+          if (hotelList === null) {
+            console.log(`unknown hotelList: ${request.payload.hotelListTitle}`);
+            let user = await db.userStore.getUserByEmail(request.payload.userEmail);
+            if (user === null) {
+              console.log(`unknown user, adding user ${request.payload.userEmail}`);
+              user = await db.userStore.addUser({email: request.payload.userEmail});
+            }
+            const newHotelList = {
+              userid: user._id,
+              title: request.payload.hotelListTitle,
+            }
+            console.log(`unknown hotelList, adding hotelList ${request.payload.hotelListTitle}`);
+            hotelList = await db.hotelListStore.addHotelList(newHotelList);
+          }
+          const newHotel = {
+              name: request.payload.name,
+              city: request.payload.city,
+              airport: request.payload.airport,
+          };
+          console.log(`newHotel: ${newHotel}`);
+          console.log(newHotel);
+          await db.hotelStore.addHotel(hotelList._id, newHotel);
+          // hotelListController.index();
+          console.log("adminController addHotel handler completed, returning");
+          return h.redirect("/admin/hotels");
+      },
+    },
+
+    addHotelToExistingList: {
+      validate: {
+        payload: HotelSpec,
+        options: { abortEarly: false },
+        failAction: async function (request, h, error) {
+          console.log("adminController addHotelToExistingList failAction started");
+          console.log(request.params);
+          const hotelLists = await db.hotelListStore.getAllHotelLists();
+          for (let i = 0; i < hotelLists.length; i++) {
+            hotelLists[i].hotels = await db.hotelStore.getHotelsByHotelListId(hotelLists[i]._id);
           }
           const viewData = {
               title: "Add hotel error",
@@ -105,16 +207,13 @@ export const adminController = {
             viewData.admin = true;
           }
           console.log(`viewData listId: ${viewData.listId}`);
-          console.log("adminController addHotel failAction completed, returning");
+          console.log("adminController addHotelToExistingList failAction completed, returning");
           return h.view( "admin-hotels-view", viewData ).takeover().code(400);
         },
       },
       handler: async function (request, h) {
-          console.log("adminController addHotel handler started");
-          const hotelList = await db.hotelListStore.getHotelListById(request.payload.hotelListId);
-          console.log(hotelList);
-          //  console.log(`hotelList: ${hotelList}`); // for testing
-          //  console.log(hotelList); // for testing
+          console.log("adminController addHotelToExistingList handler started");
+          console.log(request.params);
           const newHotel = {
               name: request.payload.name,
               city: request.payload.city,
@@ -122,12 +221,13 @@ export const adminController = {
           };
           console.log(`newHotel: ${newHotel}`);
           console.log(newHotel);
-          await db.hotelStore.addHotel(request.payload.hotelListId, newHotel);
+          await db.hotelStore.addHotel(request.params.hotellistid, newHotel);
           // hotelListController.index();
-          console.log("adminController addHotel handler completed, returning");
-          return h.redirect("/admin/hotels");
+          console.log("adminController addHotelToExistingList handler completed, returning");
+          return h.redirect(`/admin/hotellists/hotellist/${request.params.hotellistid}`);
       },
     },
+
 
     addUser: {
       validate: {
@@ -184,7 +284,11 @@ export const adminController = {
         console.log("adminController addHotelList handler started");
         const userEmail = request.payload.email;
         console.log(`userEmail: ${userEmail}`);
-        const user = await db.userStore.getUserByEmail(userEmail);
+        let user = await db.userStore.getUserByEmail(userEmail);
+            if (user === null) {
+              console.log(`unknown user, adding user ${userEmail}`);
+              user = await db.userStore.addUser({email: userEmail});
+            }
         const newHotelList = {
           userid: user._id,
           title: request.payload.title,
@@ -200,6 +304,7 @@ export const adminController = {
       handler: async function(request, h) {
         console.log("adminController deleteHotel handler started");
         console.log(`request.params.id: ${request.params.id}`);
+        const hotel = await db.hotelStore.getHotelById(request.params.id);
         await db.hotelStore.deleteHotelById(request.params.id);
         console.log("adminController deleteHotel handler completed, returning");
         return h.redirect("/admin/hotels");
@@ -210,6 +315,20 @@ export const adminController = {
       handler: async function(request, h) {
         console.log("adminController deleteHotel handler started");
         console.log(`request.params.id: ${request.params.id}`);
+        console.log("checking for hotelLists to be deleted")
+        const hotelListsToBeDeleted = await db.hotelListStore.getUserHotelLists(request.params.id);
+        for (let i = 0; i < hotelListsToBeDeleted.length; i++) {
+          console.log("checking for hotels to be deleted")
+          const hotelsToBeDeleted = await db.hotelStore.getHotelsByHotelListId(hotelListsToBeDeleted[i]._id);
+          for (let i = 0; i < hotelsToBeDeleted.length; i++) {
+            console.log(`deleting hotel: ${hotelsToBeDeleted[i]._id}`);
+            await db.hotelStore.deleteHotelById(hotelsToBeDeleted[i]._id);
+          }
+          console.log("hotelsToBeDeleted completed, deleting list");
+          console.log(`deleting hotelList: ${hotelListsToBeDeleted[i]._id}`);
+          await db.hotelStore.deleteHotelById(hotelListsToBeDeleted[i]._id);
+        }
+        console.log("hotelListsToBeDeleted completed, deleting list");
         await db.userStore.deleteUserById(request.params.id);
         console.log("adminController deleteHotel handler completed, returning");
         return h.redirect("/admin/users");
@@ -220,6 +339,13 @@ export const adminController = {
       handler: async function (request, h) {
         console.log("adminController deleteHotelList handler started");
         console.log(`request.params.id: ${request.params.id}`);
+        console.log("checking for hotels to be deleted")
+        const hotelsToBeDeleted = await db.hotelStore.getHotelsByHotelListId(request.params.id);
+        for (let i = 0; i < hotelsToBeDeleted.length; i++) {
+          console.log(`deleting hotel: ${hotelsToBeDeleted[i]._id}`);
+          await db.hotelStore.deleteHotelById(hotelsToBeDeleted[i]._id);
+        }
+        console.log("hotelsToBeDeleted completed, deleting list");
         await db.hotelListStore.deleteHotelListById(request.params.id);
         console.log("adminController deleteHotelList handler completed, returning");
         return h.redirect("/admin/hotellists");
@@ -238,15 +364,18 @@ export const adminController = {
     deleteAllUsers: {
       handler: async function(request, h) {
         console.log("adminController deleteAllUsers handler started");
+        await db.hotelStore.deleteAllHotels();
+        await db.hotelListStore.deleteAllHotelLists();
         await db.userStore.deleteAllUsers();
         console.log("adminController deleteAllUsers handler completed, returning");
-        return h.redirect("/admin/users");
+        return h.redirect("/");
       },
     },
 
     deleteAllHotelLists: {
       handler: async function (request, h) {
         console.log("adminController deleteAllHotelLists handler started");
+        await db.hotelStore.deleteAllHotels();
         await db.hotelListStore.deleteAllHotelLists();
         console.log("adminController deleteAllHotelLists handler completed, returning");
         return h.redirect("/admin/hotellists");

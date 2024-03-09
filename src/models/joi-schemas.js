@@ -32,7 +32,8 @@ export const HotelAdminSpec = {
   name: Joi.string().required(),
   city: Joi.string().required(),
   airport: Joi.string().required(),
-  hotelListId: Joi.string().required(),
+  hotelListTitle: Joi.string().required(),
+  userEmail: Joi.string().required(), // Joi.string().email().required(), // removed email for easier testing, put back for production
 };
 
 export const HotelListSpec = {
