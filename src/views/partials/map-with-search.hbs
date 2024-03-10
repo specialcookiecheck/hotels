@@ -52,6 +52,31 @@ const map = L.map('my-map').setView([54, -6.4], 2);
 // Marker to save the position of found address
 let marker;
 
+let customIcon = {
+        iconUrl: "https://cdn.iconscout.com/icon/free/png-256/free-hotel-512-453740.png",
+        iconSize:[40,40]
+    }
+
+    let myIcon = L.icon(customIcon);
+
+    let iconOptions = {
+        title: "{{name}}",
+        riseOnHover: true,
+        icon: myIcon,
+    } 
+
+    {{#each hotels}}   
+    
+    var markerExisting = L.marker([{{latitude}}, {{longitude}}], iconOptions).addTo(map);
+
+    {{# if admin}}
+    markerExisting.bindPopup("<b>{{name}}</b><br>{{houseNumber}} {{street}}<br>{{city}}<br>{{country}}<br>{{postcode}}<br><a href=\"/admin/hotellists/hotellist/{{hotelListid}}\">Open hotel list</a>"); //.openPopup();
+    {{else}}
+    markerExisting.bindPopup("<b>{{name}}</b><br>{{houseNumber}} {{street}}<br>{{city}}<br>{{country}}<br>{{postcode}}<br><img src=\"{{imageURL}}\" width=\"50px\"><br><a href=\"/hotellist/{{hotelListid}}\">Open hotel list</a>"); //.openPopup();
+    {{/if}}
+    
+    {{/each}}
+
 // The API Key provided is restricted to JSFiddle website
 // Get your own API Key on https://myprojects.geoapify.com
 const myAPIKey = "{{geoAPIKey}}";

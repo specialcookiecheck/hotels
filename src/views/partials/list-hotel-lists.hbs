@@ -1,3 +1,9 @@
+<section class="section box">
+  <div class="has-text-centered">
+    <h1 class="title">Your saved Hotel Lists</h1>
+    <br>
+  </div>
+
 {{#each hotelLists}}
 
 {{#if @root.admin}}
@@ -43,5 +49,14 @@
 </div>
   
 {{/each}}
+</section>
 
-{{> hotels-map}}
+<section class="section box">
+  <div class="has-text-centered">
+    <h2 class="title">All your favourite hotels everywhere!</h2>
+    <br>
+  </div>
+  <div>
+    {{> hotels-map}}
+  </div>
+</section>
