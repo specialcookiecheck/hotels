@@ -10,7 +10,7 @@
         {{_id}}
       </h3>
       <h3>User Email:<br>
-        {{userid}}
+        {{user.email}}
       </h3>
 
       <a href="/admin/hotellists/hotellist/{{_id}}" class="button">
@@ -26,20 +26,22 @@
 
 {{#unless @root.admin}}
 <div class="box box-link-hover-shadow">
-      <h3 class="title">{{title}}</h3>
-      <a href="/hotellist/{{_id}}" class="button">
-      <span class="icon is-small">
-          <i class="fas fa-folder-open"></i>
-        </span>
-      </a>
-      <a href="/dashboard/deletehotellist/{{_id}}" class="button">
-        <i class="fas fa-trash"></i>
-      </a>
+    <h3 class="title">{{title}}</h3>
+    <a href="/hotellist/{{_id}}" class="button">
+    <span class="icon is-small">
+        <i class="fas fa-folder-open"></i>
+      </span>
+    </a>
+    <a href="/dashboard/deletehotellist/{{_id}}" class="button">
+      <i class="fas fa-trash"></i>
+    </a>
 {{/unless}}
 
-    {{#if ../displayHotels}}
-      {{> list-hotels}}
-    {{/if}}
-  </div>
+{{#if ../displayHotels}}
+  {{> list-hotels}}
+{{/if}}
+</div>
   
 {{/each}}
+
+{{> hotels-map}}

@@ -20,5 +20,6 @@ export function connectFirebase() {
   // const defaultApp = initializeApp(process.env.FIREBASE_CONFIG);
 
   db = app.firestore();
+  db.settings({ ignoreUndefinedProperties: true })
   // console.log(db);
 }

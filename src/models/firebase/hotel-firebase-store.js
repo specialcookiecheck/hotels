@@ -7,6 +7,17 @@ export const hotelFirebaseStore = {
 
   async addHotel(hotelListId, hotel) {
     console.log("hotelFirebaseStore addHotel started");
+    console.log(hotel);
+    const imageOptions = [
+      "https://cdn.stocksnap.io/img-thumbs/960w/hotel-room_DGBAEIS339.jpg",
+      "https://cdn.stocksnap.io/img-thumbs/960w/modern-room_ORRHZ1VULX.jpg",
+      "https://www.shutterstock.com/shutterstock/photos/2183226477/display_1500/stock-photo-vacation-couple-on-the-beach-near-swimming-pool-luxury-travel-2183226477.jpg",
+      "https://www.shutterstock.com/shutterstock/photos/1964198212/display_1500/stock-photo-asian-girl-receptionist-and-caucasian-woman-traveler-checking-or-checkout-in-hotel-1964198212.jpg",
+      "https://cdn.stocksnap.io/img-thumbs/960w/resort-leisure_9IRWVX4JZL.jpg"
+    ]
+    const randomImageURL = imageOptions[Math.floor(Math.random() * imageOptions.length)];
+    console.log(randomImageURL);
+    hotel.imageURL = randomImageURL;
     const hotelId = v4();
     hotel._id = hotelId;
     hotel.hotelListid = hotelListId;

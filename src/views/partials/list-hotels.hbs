@@ -3,33 +3,45 @@
     <tr>
       <th>Hotel name</th>
       <th>City</th>
-      <th>Airport</th>
+      <th>Country</th>
+
       {{#unless @root.admin}}
       <td></td>
       {{/unless}}
+
       {{#if @root.admin}}
       <th>hotelId</td>
       <th>hotelListId</td>
+      <th>latitude</th>
+      <th>longitude</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
     
       {{#each hotels}}
+
         <tr>
           <td>
-            {{name}}
+            <a href={{imageURL}} target="_blank">{{name}}</a>
           </td>
           <td>
             {{city}}
           </td>
           <td>
-            {{airport}}
+            {{country}}
           </td>
           <td>
             {{_id}}
           </td>
           <td>
             {{hotelListid}}
+          </td>
+          <td>
+            {{latitude}}
+          </td>
+          <td>
+            {{longitude}}
           </td>
           <td> 
             {{#if hotelListid}}
@@ -42,10 +54,10 @@
             </a>
             {{/if}}
           </td>
-          </td>
         </tr>
-      {{/each}}
 
+      {{/each}}
+      </tbody>
       {{/if}}
 
       {{#unless @root.admin}}
@@ -55,13 +67,13 @@
       {{#each hotelList.hotels}}
         <tr>
           <td>
-            {{name}}
+            <a href={{imageURL}} target="_blank">{{name}}</a>
           </td>
           <td>
             {{city}}
           </td>
           <td>
-            {{airport}}
+            {{country}}
           </td>
           <td>
             <a href="/hotellist/{{hotelListid}}/deletehotel/{{_id}}" class="ui icon button">
@@ -69,7 +81,8 @@
             </a>
         </tr>
       {{/each}}
-      {{/unless}}
-    
-  </tbody>
+
+    </tbody>
+    {{/unless}}
+
 </table>

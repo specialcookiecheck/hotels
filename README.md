@@ -17,8 +17,16 @@
 - https://stackoverflow.com/questions/12297959/access-properties-of-the-parent-with-a-handlebars-each-loop
 - https://stackoverflow.com/questions/42583298/bulma-how-do-you-center-a-button-in-a-box
 - https://firebase.google.com/docs/firestore/query-data/aggregation-queries
+- https://medium.com/@nargessmi87/how-to-embede-open-street-map-in-a-webpage-like-google-maps-8968fdad7fe4
+- https://medium.com/@nargessmi87/how-to-customize-the-openstreetmap-marker-icon-and-binding-popup-ab2254bddec2
+- https://apidocs.geoapify.com/samples/autocomplete/autocomplete-tutorial/#step-1
+- https://jsfiddle.net/Geoapify/akzrtm26/
+- https://www.geoapify.com/tutorial/how-to-implement-geocoding-javascript-tutorial
+- https://stackoverflow.com/questions/4550505/getting-a-random-value-from-a-javascript-array
 
 
 <br>
 <h1> Image sources </h1>
 - https://upload.wikimedia.org/wikipedia/commons/8/87/Piran_Portoro%C5%BE_Kempinski_Palace_Hotel-4500.jpg
+- https://cdn.iconscout.com/icon/free/png-256/free-hotel-512-453740.png
+(images not shown or hosted on the website are not included)
