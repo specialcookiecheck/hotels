@@ -10,9 +10,9 @@ export const adminController = {
         const loggedInUser = request.auth.credentials;
         const geoAPIKey = process.env.GEO_API_KEY;
         const allHotels = await db.hotelStore.getAllHotels();
-        const userCount = await getDatabaseCount('users');
-        const hoteListCount = await getDatabaseCount('hotelLists');
-        const hotelCount = await getDatabaseCount('hotels');
+        const userCount = await getDatabaseCount("users");
+        const hoteListCount = await getDatabaseCount("hotelLists");
+        const hotelCount = await getDatabaseCount("hotels");
         const viewData = {
           title: "Admin Dashboard",
           userCount: userCount,
@@ -114,8 +114,8 @@ export const adminController = {
         for (let i = 0; i < hotelLists.length; i++) {
           console.log(`i: ${i}`);
           console.log(hotelLists[i]._id);
-          hotelLists[i].hotels = await db.hotelStore.getHotelsByHotelListId(hotelLists[i]._id);
-          hotelLists[i].user = await db.userStore.getUserByEmail(loggedInUser.email);
+          hotelLists[i].hotels = await db.hotelStore.getHotelsByHotelListId(hotelLists[i]._id); // necessary to make sure database provides all values in time
+          hotelLists[i].user = await db.userStore.getUserByEmail(loggedInUser.email); // necessary to make sure database provides all values in time
           console.log(hotelLists[i]);
         }
         const viewData = {
@@ -163,7 +163,7 @@ export const adminController = {
           const hotelLists = await db.hotelListStore.getAllHotelLists();
           const geoAPIKey = process.env.GEO_API_KEY;
           for (let i = 0; i < hotelLists.length; i++) {
-            hotelLists[i].hotels = await db.hotelStore.getHotelsByHotelListId(hotelLists[i]._id);
+            hotelLists[i].hotels = await db.hotelStore.getHotelsByHotelListId(hotelLists[i]._id); // necessary to make sure database provides all values in time
           }
           const viewData = {
               title: "Add hotel error",
@@ -235,7 +235,7 @@ export const adminController = {
           console.log(request.params);
           const hotelLists = await db.hotelListStore.getAllHotelLists();
           for (let i = 0; i < hotelLists.length; i++) {
-            hotelLists[i].hotels = await db.hotelStore.getHotelsByHotelListId(hotelLists[i]._id);
+            hotelLists[i].hotels = await db.hotelStore.getHotelsByHotelListId(hotelLists[i]._id); // necessary to make sure database provides all values in time
           }
           const viewData = {
               title: "Add hotel error",
@@ -360,14 +360,14 @@ export const adminController = {
         const hotelListsToBeDeleted = await db.hotelListStore.getUserHotelLists(request.params.id);
         for (let i = 0; i < hotelListsToBeDeleted.length; i++) {
           console.log("checking for hotels to be deleted")
-          const hotelsToBeDeleted = await db.hotelStore.getHotelsByHotelListId(hotelListsToBeDeleted[i]._id);
-          for (let i = 0; i < hotelsToBeDeleted.length; i++) {
-            console.log(`deleting hotel: ${hotelsToBeDeleted[i]._id}`);
-            await db.hotelStore.deleteHotelById(hotelsToBeDeleted[i]._id);
+          const hotelsToBeDeleted = await db.hotelStore.getHotelsByHotelListId(hotelListsToBeDeleted[i]._id); // necessary to make sure database provides all values in time
+          for (let j = 0; i < hotelsToBeDeleted.length; j++) {
+            console.log(`deleting hotel: ${hotelsToBeDeleted[j]._id}`);
+            await db.hotelStore.deleteHotelById(hotelsToBeDeleted[j]._id); // necessary to make sure database provides all values in time
           }
           console.log("hotelsToBeDeleted completed, deleting list");
           console.log(`deleting hotelList: ${hotelListsToBeDeleted[i]._id}`);
-          await db.hotelStore.deleteHotelById(hotelListsToBeDeleted[i]._id);
+          await db.hotelStore.deleteHotelById(hotelListsToBeDeleted[i]._id); // necessary to make sure database provides all values in time
         }
         console.log("hotelListsToBeDeleted completed, deleting list");
         await db.userStore.deleteUserById(request.params.id);
@@ -384,7 +384,7 @@ export const adminController = {
         const hotelsToBeDeleted = await db.hotelStore.getHotelsByHotelListId(request.params.id);
         for (let i = 0; i < hotelsToBeDeleted.length; i++) {
           console.log(`deleting hotel: ${hotelsToBeDeleted[i]._id}`);
-          await db.hotelStore.deleteHotelById(hotelsToBeDeleted[i]._id);
+          await db.hotelStore.deleteHotelById(hotelsToBeDeleted[i]._id); // necessary to make sure database provides all values in time
         }
         console.log("hotelsToBeDeleted completed, deleting list");
         await db.hotelListStore.deleteHotelListById(request.params.id);

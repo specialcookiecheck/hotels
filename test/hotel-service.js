@@ -115,7 +115,7 @@ export const hotelService = {
   async authenticate(user) {
     console.log("hotelService authenticate started");
     const response = await axios.post(`${this.hotelUrl}/api/users/authenticate`, user);
-    axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.token;
+    axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.token; // lab config
     console.log("hotelService authenticate completed");
     return response.data;
   },

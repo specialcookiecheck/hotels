@@ -15,7 +15,7 @@ suite("User API tests", () => {
       console.log(testUsers);
       for (let i = 0; i < testUsers.length; i += 1) {
         console.log(testUsers[i]);
-        testUsers[i] = await hotelService.createUser(testUsers[i]);
+        testUsers[i] = await hotelService.createUser(testUsers[i]); // without the await the database is too slow
       }
       await hotelService.createUser(vinc);
       await hotelService.authenticate(vincCredentials);

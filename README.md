@@ -1,5 +1,20 @@
 # hotels
 
+This app allows users to search for and store their favourite hotels. Once hotels have been added to hotel lists,
+user will see their added hotels with on the map for that particular list, and all their hotels in general on their dashboard.
+
+An admin account is generated automatically when the app starts, to login use "admin" in both fields (email checking is disabled while
+the app is in development, to make for easier testing). The admin can see everything that has been added by all users on the dashboard
+(except the user's password), can delete everything (which automatically deletes all subdocuments as well), and the admin can edit user details.
+The admin dashboard also shows all the hotels for all the user on a map, and shows database statistics.
+
+Unfortunately a problem did crop up towards the very end related to "Leaflet" unsecured CSS files so not all functionality can
+be seen on Render, and Render renders with some errors, but it is working properly on localhost which I'm happy to show.
+
+Also, the aggregate tests don't work properly, I suspect because of a database delay, but the individual tests all work
+
+Enjoy!
+
 <br>
 <h1> References </h1>
 - https://www.freecodecamp.org/news/the-ultimate-guide-to-git-merge-and-git-rebase/

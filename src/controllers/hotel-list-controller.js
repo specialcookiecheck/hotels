@@ -1,4 +1,3 @@
-import bodyParser from 'body-parser';
 import { db } from "../models/db.js";
 import { HotelSpec } from "../models/joi-schemas.js";
 
