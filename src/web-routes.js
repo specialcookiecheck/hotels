@@ -22,6 +22,7 @@ export const webRoutes = [
   { method: "GET", path: "/admin/hotellists/hotellist/{id}", config: adminController.hotelListIndex },
   { method: "GET", path: "/admin/hotels", config: adminController.listOnlyHotelsIndex },
   { method: "GET", path: "/admin/hotels/hotelswithlist", config: adminController.listAllHotelsIndex },
+  { method: "GET", path: "/admin/users/user/{id}", config: adminController.editUserIndex },
   { method: "POST", path: "/admin/hotels/addhotel", config: adminController.addHotel },
   { method: "POST", path: "/admin/hotellists/{hotellistid}/addhotel", config: adminController.addHotelToExistingList },
   { method: "POST", path: "/admin/users/adduser", config: adminController.addUser },
