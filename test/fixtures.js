@@ -36,7 +36,9 @@ export const testUsers = [
 export const testHotel = {
   name: "Disneyland Paris",
   city: "Paris",
-  airport: "CDG",
+  country: "France",
+  latitude: 48.8,
+  longitude: 2.3
 };
 
 export const testHotelLists = [
@@ -55,16 +57,22 @@ export const testHotels = [
   {
       name: "Waldorf Astoria",
       city: "New York",
-      airport: "JFK",
+      country: "USA",
+      latitude: 1,
+      longitude: 1,
   },
   {
       name: "Ritz Carlton",
       city: "New York",
-      airport: "JFK",
+      country: "USA",
+      latitude: 1,
+      longitude: 1,
   },
   {
       name: "B&B down the road",
       city: "Dundalk",
-      airport: "DUB",
+      country: "Ireland",
+      latitude: 54,
+      longitude: -6.4,
   }
 ];
