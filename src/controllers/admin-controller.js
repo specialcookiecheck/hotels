@@ -8,6 +8,8 @@ export const adminController = {
       handler: async function (request, h) {
         console.log("adminController index handler started")
         const loggedInUser = request.auth.credentials;
+        const geoAPIKey = process.env.GEO_API_KEY;
+        const allHotels = await db.hotelStore.getAllHotels();
         const userCount = await getDatabaseCount('users');
         const hoteListCount = await getDatabaseCount('hotelLists');
         const hotelCount = await getDatabaseCount('hotels');
@@ -16,6 +18,8 @@ export const adminController = {
           userCount: userCount,
           hoteListCount: hoteListCount,
           hotelCount: hotelCount,
+          hotels: allHotels,
+          geoAPIKey: geoAPIKey,
         };
         if (loggedInUser.email === process.env.ADMIN_EMAIL) {
             viewData.admin = true;
@@ -88,11 +92,13 @@ export const adminController = {
       handler: async function (request, h) {
         console.log("adminController listAllHotelsIndex handler started")
         const loggedInUser = request.auth.credentials;
+        const geoAPIKey = process.env.GEO_API_KEY;
         const hotelLists = await db.hotelListStore.getAllHotelLists();
         for (let i = 0; i < hotelLists.length; i++) {
           console.log(`i: ${i}`);
           console.log(hotelLists[i]._id);
           hotelLists[i].hotels = await db.hotelStore.getHotelsByHotelListId(hotelLists[i]._id);
+          hotelLists[i].user = await db.userStore.getUserByEmail(loggedInUser.email);
           console.log(hotelLists[i]);
         }
         const viewData = {
@@ -100,6 +106,7 @@ export const adminController = {
           hotelLists: hotelLists,
           displayHotels: true,
           displayListDetails: true,
+          geoAPIKey: geoAPIKey,
         };
         if (loggedInUser.email === process.env.ADMIN_EMAIL) {
             viewData.admin = true;
@@ -113,11 +120,13 @@ export const adminController = {
       handler: async function (request, h) {
         console.log("adminController listOnlyHotelsIndex handler started")
         const loggedInUser = request.auth.credentials;
+        const geoAPIKey = process.env.GEO_API_KEY;
         const hotels = await db.hotelStore.getAllHotels();
         const viewData = {
           title: "Admin Only Hotels",
           displayHotels: true,
           hotels: hotels,
+          geoAPIKey: geoAPIKey,
         };
         if (loggedInUser.email === process.env.ADMIN_EMAIL) {
             viewData.admin = true;
@@ -135,6 +144,7 @@ export const adminController = {
           console.log("adminController addHotel failAction started");
           console.log(request.params);
           const hotelLists = await db.hotelListStore.getAllHotelLists();
+          const geoAPIKey = process.env.GEO_API_KEY;
           for (let i = 0; i < hotelLists.length; i++) {
             hotelLists[i].hotels = await db.hotelStore.getHotelsByHotelListId(hotelLists[i]._id);
           }
@@ -144,6 +154,7 @@ export const adminController = {
               hotels: await db.hotelStore.getAllHotels(),
               errors: error.details,
               displayHotels: true,
+              geoAPIKey: geoAPIKey,
           };
           const loggedInUser = request.auth.credentials;
           if (loggedInUser.email === process.env.ADMIN_EMAIL) {
@@ -179,9 +190,15 @@ export const adminController = {
             hotelList = await db.hotelListStore.addHotelList(newHotelList);
           }
           const newHotel = {
-              name: request.payload.name,
-              city: request.payload.city,
-              airport: request.payload.airport,
+            name: request.payload.name,
+            city: request.payload.city,
+            country: request.payload.country,
+            houseNumber: request.payload.houseNumber,
+            street: request.payload.street,
+            postcode: request.payload.postcode,
+            state: request.payload.state,
+            longitude: request.payload.longitude,
+            latitude: request.payload.latitude,
           };
           console.log(`newHotel: ${newHotel}`);
           console.log(newHotel);
@@ -224,7 +241,7 @@ export const adminController = {
           const newHotel = {
               name: request.payload.name,
               city: request.payload.city,
-              airport: request.payload.airport,
+              country: request.payload.country,
           };
           console.log(`newHotel: ${newHotel}`);
           console.log(newHotel);

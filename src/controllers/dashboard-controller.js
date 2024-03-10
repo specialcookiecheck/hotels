@@ -8,14 +8,25 @@ export const dashboardController = {
       console.log("dashboardController index handler started");
       const loggedInUser = request.auth.credentials;
       console.log(loggedInUser);
-      // const hotelLists = await db.hotelListStore.getUserHotelLists(loggedInUser._id);
-      const hotelLists = await db.hotelListStore.getUserHotelLists(loggedInUser._id); // auth login
-      // const hotelLists = await db.hotelListStore.getAllHotelLists(); originial
-      console.log("hotelLists loaded");
+      const hotelLists = await db.hotelListStore.getUserHotelLists(loggedInUser._id);
+      const hotels = [];
+      for (let i = 0; i < hotelLists.length; i++) {
+        console.log("i-loop running");
+        console.log(hotelLists[i]);
+        hotelLists[i].hotels = await db.hotelStore.getHotelsByHotelListId(hotelLists[i]._id);
+        for (let j = 0; j < hotelLists[i].hotels.length; j++) {
+          console.log("j-loop running");
+          console.log(hotelLists[i].hotels[j]);
+          hotels.push(hotelLists[i].hotels[j]);
+        }
+      };
+      console.log("hotels loaded, logging hotels");
+      console.log(hotels);
       const viewData = {
         title: "Hotel Dashboard",
         user: loggedInUser,
         hotelLists: hotelLists,
+        hotels: hotels,
       };
       if (loggedInUser.email === process.env.ADMIN_EMAIL) {
         viewData.admin = true;

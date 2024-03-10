@@ -1,14 +1,29 @@
+import fetch from 'node-fetch';
 import { db } from "../models/db.js";
 import { UserSpec, UserCredentialsSpec } from "../models/joi-schemas.js";
-
 
 export const accountsController = {
   index: {
     auth: false,
-    handler: function (request, h) {
+    handler: async function (request, h) {
         console.log("accountsController index handler started")
+        const geoAPIKey = process.env.GEO_API_KEY;
+        const hotels = await db.hotelStore.getAllHotels();
+        const viewData = {
+          title: "Welcome to Hotels!",
+          hotels: hotels,
+          geoAPIKey: geoAPIKey,
+        }
+        console.log(geoAPIKey);
+        const geoAPIFetchURL = `https://api.geoapify.com/v1/geocode/search?text=waldorf%20astoria%20new%20york&lang=en&limit=1&type=amenity&format=json&apiKey=${geoAPIKey}`
+        console.log(geoAPIFetchURL);
+        const response = await fetch(geoAPIFetchURL);
+        const data = await response.json();
+        //console.log(data);
+        //console.log(data.results[0]);
+        viewData.waldorf = data.results[0];
         console.log("accountsController index handler completed, returning")
-        return h.view("main", { title: "Welcome to Hotels!" });
+        return h.view("main", viewData);
     },
   },
 

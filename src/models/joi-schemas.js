@@ -22,19 +22,23 @@ export const UserSpecPlus = UserSpec.keys({
 
 export const UserArray = Joi.array().items(UserSpecPlus).label("UserArray");
   
-export const HotelSpec = {
+export const HotelSpec = Joi.object().keys({
   name: Joi.string().required(),
   city: Joi.string().required(),
-  airport: Joi.string().required(),
-};
+  country: Joi.string().required(),
+  latitude: Joi.number().required(),
+  longitude: Joi.number().required(),
+}).unknown(true);
 
-export const HotelAdminSpec = {
+export const HotelAdminSpec = Joi.object().keys({
   name: Joi.string().required(),
   city: Joi.string().required(),
-  airport: Joi.string().required(),
+  country: Joi.string().required(),
+  latitude: Joi.number().required(),
+  longitude: Joi.number().required(),
   hotelListTitle: Joi.string().required(),
   userEmail: Joi.string().required(), // Joi.string().email().required(), // removed email for easier testing, put back for production
-};
+}).unknown(true);
 
 export const HotelListSpec = {
   title: Joi.string().required(),
