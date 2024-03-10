@@ -32,17 +32,34 @@ export const adminController = {
     listAllUsersIndex: {
       handler: async function (request, h) {
         console.log("adminController listAllUsersIndex handler started")
-        const loggedInUser = request.auth.credentials;
         const userList = await db.userStore.getAllUsers();
         const viewData = {
           title: "Admin All Users",
           userList: userList,
         };
+        const loggedInUser = request.auth.credentials;
         if (loggedInUser.email === process.env.ADMIN_EMAIL) {
             viewData.admin = true;
         }
         console.log("adminController listAllUsersIndex handler completed, returning")
         return h.view("admin-users-view", viewData);
+      },
+    },
+
+    editUserIndex: {
+      handler: async function (request, h) {
+        console.log("adminController listAllUsersIndex handler started")
+        const loggedInUser = request.auth.credentials;
+        const user = await db.userStore.getUserById(request.params.id);
+        const viewData = {
+          title: `Edit User ${user.email}`,
+          user: user,
+        };
+        if (loggedInUser.email === process.env.ADMIN_EMAIL) {
+            viewData.admin = true;
+        }
+        console.log("adminController listAllUsersIndex handler completed, returning")
+        return h.view("admin-edit-user-view", viewData);
       },
     },
 
